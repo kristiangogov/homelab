@@ -3,7 +3,7 @@
 K3s cluster running self-hosted services for personal use.
 
 > [!NOTE] 
-> You can find detailed write-ups on my blog:
+> You can find detailed write-ups on my blog:  
 > [Homelab: K3s initial setup](https://gogov.dev/blog/homelab-initial-setup)
 
 ## Structure
@@ -24,4 +24,4 @@ K3s cluster running self-hosted services for personal use.
 
 ## Goal
 
-Learn **Kubernetes** by breaking things in a controlled environment. Some services are pretty useful too ;)
+Learn **Kubernetes** by breaking things in a controlled environment. Some services are pretty useful too!
