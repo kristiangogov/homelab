@@ -2,6 +2,10 @@
 
 K3s cluster running self-hosted services for personal use.
 
+> [!NOTE] 
+> You can find detailed write-ups on my blog:
+> [Homelab: K3s initial setup](https://gogov.dev/blog/homelab-initial-setup)
+
 ## Structure
 
 ```
