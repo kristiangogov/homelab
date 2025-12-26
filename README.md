@@ -4,7 +4,7 @@ K3s cluster running self-hosted services for personal use.
 
 > [!NOTE] 
 > You can find detailed write-ups on my blog:  
-> [K3s initial setup](https://gogov.dev/blog/homelab-initial-setup)
+> [K3s initial setup](https://gogov.dev/blog/homelab-initial-setup)  
 > [Adding Observability with Prometheus & Grafana](https://gogov.dev/blog/homelab-observability)
 
 ## Structure
