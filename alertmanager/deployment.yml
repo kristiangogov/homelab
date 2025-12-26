@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alertmanager
+  template:
+    metadata:
+      labels:
+        app: alertmanager
+    spec:
+      # Init container to fix permissions
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 65534:65534 /alertmanager"]
+          volumeMounts:
+            - name: data-volume
+              mountPath: /alertmanager
+      containers:
+        - name: alertmanager
+          image: prom/alertmanager:latest
+          args:
+            - '--config.file=/etc/alertmanager/alertmanager.yml'
+            - '--storage.path=/alertmanager'
+          ports:
+            - containerPort: 9093
+              name: web
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/alertmanager
+            - name: data-volume
+              mountPath: /alertmanager
+      volumes:
+        - name: config-volume
+          configMap:
+            name: alertmanager-config
+        - name: data-volume
+          hostPath:
+            path: /opt/k8s-data/alertmanager
+            type: DirectoryOrCreate
