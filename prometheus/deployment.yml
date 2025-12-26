@@ -13,6 +13,20 @@ spec:
       labels:
         app: prometheus
     spec:
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 65534:65534 /prometheus"]
+          securityContext:
+            runAsUser: 0
+          volumeMounts:
+            - name: data
+              mountPath: /prometheus
+
       containers:
         - name: prometheus
           image: prom/prometheus:latest
@@ -23,6 +37,7 @@ spec:
               mountPath: /etc/prometheus
             - name: data
               mountPath: /prometheus
+
       volumes:
         - name: config
           configMap:
