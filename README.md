@@ -8,16 +8,23 @@ K3s cluster running self-hosted services for personal use.
 > [Adding Observability with Prometheus & Grafana](https://gogov.dev/blog/homelab-observability)
 
 ## Structure
-
 ```
 .
-└── service-name/        # Service name
-    ├── namespace.yml    # k8s Namespace
-    ├── deployment.yml   # k8s Deployment
-    ├── configmap.yml    # k8s Config Map
-    ├── service.yml      # k8s Service
-    ├── etc.
+├── infrastructure/         # Cluster-wide setup
+│   └── namespaces/
+├── monitoring/             # Monitoring stack
+│   ├── grafana/
+│   ├── prometheus/
+│   ├── kube-state-metrics/
+│   ├── node-exporter/
+│   └── alertmanager/
+├── services/               # Running services
+│   ├── homepage/
+│   └── jellyfin/
+└── scripts/                # Setup scripts
+    └── apply.sh
 ```
+
 
 ## Setup
 
@@ -29,10 +36,10 @@ K3s cluster running self-hosted services for personal use.
 **Hardware**: Lenovo ThinkPad T14 Gen 1   
 **OS**: Fedora 43 KDE Edition  
 **Engine**: K3s  
-**Observability Stack**: k9s (cli), Prometheus, Grafana, AlertManager, node-exporter, kube-statemetrics  
-**Services**: Jellyfin Media Streaming
+**Observability Stack**: k9s (cli), Prometheus, Grafana, AlertManager, node-exporter, kube-state-metrics  
+**Services**: Jellyfin Media Streaming, Homepage
 
-**Up next:** [HomePage](https://gethomepage.dev/), Configure AlertManager
+**Up next**: Configure AlertManager, Harden Security
 
 ## Goal
 
