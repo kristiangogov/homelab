@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  namespace: homepage
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  kubernetes.yaml: |
+    mode: cluster
+  settings.yaml: ""
+  #settings.yaml: |
+  #  providers:
+  #    longhorn:
+  #      url: https://longhorn.my.network
+  custom.css: ""
+  custom.js: ""
+  bookmarks.yaml: |
+    - Bookmarks:
+        - Google:
+            - abbr: G
+              href: https://google.com/
+        - DuckDuckGo:
+            - abbr: D
+              href: https://duckduckgo.com
+  services.yaml: |
+    - Monitoring:
+        - Grafana:
+            href: http://192.168.0.104:30030
+            icon: grafana.png
+        - Prometheus:
+            href: http://192.168.0.104:30090
+            icon: prometheus.png
+        - Alertmanager:
+            href: http://192.168.0.104:30093
+            icon: alertmanager.png
+
+    - Media:
+        - Jellyfin:
+            href: http://192.168.0.104:30096
+            icon: jellyfin.png
+
+
+  widgets.yaml: |
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "cluster"
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+    - resources:
+        backend: resources
+        expanded: true
+        cpu: true
+        memory: true
+        network: default
+    - search:
+        provider: duckduckgo
+        target: _blank
+  docker.yaml: ""
