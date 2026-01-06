@@ -10,6 +10,7 @@ K3s cluster running self-hosted services for personal use.
 ## Structure
 ```
 .
+├── flux-system/            # GitOps
 ├── infrastructure/         # Cluster-wide setup
 │   └── namespaces/
 ├── monitoring/             # Monitoring stack
@@ -21,8 +22,7 @@ K3s cluster running self-hosted services for personal use.
 ├── services/               # Running services
 │   ├── homepage/
 │   └── jellyfin/
-└── scripts/                # Setup scripts
-    └── apply.sh
+└── scripts/                # Placeholder
 ```
 
 
@@ -36,10 +36,15 @@ K3s cluster running self-hosted services for personal use.
 **Hardware**: Lenovo ThinkPad T14 Gen 1   
 **OS**: Fedora 43 KDE Edition  
 **Engine**: K3s  
+**GitOps**: FluxCD  
 **Observability Stack**: k9s (cli), Prometheus, Grafana, AlertManager, node-exporter, kube-state-metrics  
 **Services**: Jellyfin Media Streaming, Homepage
 
-**Up next**: Configure AlertManager, Harden Security
+**Up next**: 
+- Migrate Prometheus to a StatefulSet for persistent storage
+- Configure AlertManager alerts
+- Set up local DNS, e.g., jellyfin.home.lab
+- Some bright new idea I haven't taught of yet
 
 ## Goal
 
