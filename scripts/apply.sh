@@ -1,4 +1,4 @@
 #!/bin/bash
 kubectl apply -f infrastructure/namespaces/
-kubectl apply -f monitoring/
-kubectl apply -f services/
+kubectl apply -R -f monitoring/
+kubectl apply -R -f services/
