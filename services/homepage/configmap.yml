@@ -23,6 +23,9 @@ data:
         - DuckDuckGo:
             - abbr: D
               href: https://duckduckgo.com
+        - Abv:
+            - abbr: A
+              href: https://abv.bg
   services.yaml: |
     - Monitoring:
         - Grafana:
