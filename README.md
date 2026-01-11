@@ -42,9 +42,11 @@ K3s cluster running self-hosted services for personal use.
 **Services**: Jellyfin Media Streaming, Homepage
 
 **Up next**: 
+- Implement Secret Management - SOPS or SealedSecrets
 - Configure AlertManager alerts
 - Set up local DNS, e.g., jellyfin.home.lab
 - Some bright new idea I haven't taught of yet
+- (Testing) Fully automated virtualized setup
 
 ## Goal
 
