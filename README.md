@@ -42,7 +42,6 @@ K3s cluster running self-hosted services for personal use.
 **Services**: Jellyfin Media Streaming, Homepage
 
 **Up next**: 
-- Migrate Prometheus to a StatefulSet for persistent storage
 - Configure AlertManager alerts
 - Set up local DNS, e.g., jellyfin.home.lab
 - Some bright new idea I haven't taught of yet

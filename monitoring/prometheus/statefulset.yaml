@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: prometheus
   namespace: monitoring
 spec:
+  serviceName: "prometheus"
   replicas: 1
   selector:
     matchLabels:
@@ -16,7 +17,6 @@ spec:
       securityContext:
         runAsUser: 65534
         runAsGroup: 65534
-
       initContainers:
         - name: fix-permissions
           image: busybox
@@ -26,7 +26,6 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /prometheus
-
       containers:
         - name: prometheus
           image: prom/prometheus:latest
@@ -37,7 +36,6 @@ spec:
               mountPath: /etc/prometheus
             - name: data
               mountPath: /prometheus
-
       volumes:
         - name: config
           configMap:
