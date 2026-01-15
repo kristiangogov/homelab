@@ -31,6 +31,13 @@ K3s cluster running self-hosted services for personal use.
 
 ## Tooling overview
 
+### Hardware
+| Logo | Device | Role |
+|:-:|-----|-------------|
+| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad T14 Gen 1 | Production (bare-metal) |
+| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging (VM Migration) |
+| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Legion 5 Slim | Workstation |
+
 ### Infrastructure
 | Logo | Name | Description |
 |:-:|-----|-------------|
