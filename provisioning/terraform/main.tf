@@ -15,35 +15,43 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-resource "libvirt_volume" "fedora_server_qcow2" {
-  name   = "fedora43-server.qcow2"
+resource "libvirt_volume" "fedora_volume" {
+  count  = var.node_count
+  name   = "fedora-node-${count.index}.qcow2"
   pool   = "default"
   source = "https://download.fedoraproject.org/pub/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2"
   format = "qcow2"
 }
 
 data "cloudinit_config" "commoninit" {
+  count         = var.node_count
   gzip          = false
   base64_encode = false
+
   part {
     content_type = "text/cloud-config"
-    content      = file("${path.module}/cloud_init.cfg")
+    content = templatefile("${path.module}/cloud_init.cfg", {
+      hostname  = "k3s-node-${count.index}"
+      user_name = var.user_name
+    })
   }
 }
 
 resource "libvirt_cloudinit_disk" "commoninit" {
-  name      = "commoninit.iso"
-  user_data = data.cloudinit_config.commoninit.rendered
+  count     = var.node_count
+  name      = "commoninit-${count.index}.iso"
+  user_data = data.cloudinit_config.commoninit[count.index].rendered
   pool      = "default"
 }
 
 resource "libvirt_domain" "k3s_node" {
-  name   = "fedora-vm-01"
-  memory = "4096"
-  vcpu   = 2
+  count  = var.node_count
+  name   = "k3s-node-${count.index}"
+  memory = var.vm_memory
+  vcpu   = var.vm_vcpu
   type   = "kvm"
 
-  cloudinit = libvirt_cloudinit_disk.commoninit.id
+  cloudinit = libvirt_cloudinit_disk.commoninit[count.index].id
 
   network_interface {
     network_name   = "default"
@@ -51,7 +59,7 @@ resource "libvirt_domain" "k3s_node" {
   }
 
   disk {
-    volume_id = libvirt_volume.fedora_server_qcow2.id
+    volume_id = libvirt_volume.fedora_volume[count.index].id
   }
 
   console {
@@ -66,6 +74,9 @@ resource "libvirt_domain" "k3s_node" {
   }
 }
 
-output "vm_ip" {
-  value = libvirt_domain.k3s_node.network_interface[0].addresses[0]
+output "vm_ips" {
+  value = {
+    for vm in libvirt_domain.k3s_node :
+    vm.name => vm.network_interface[0].addresses[0]
+  }
 }
