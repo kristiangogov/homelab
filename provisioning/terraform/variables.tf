@@ -18,3 +18,8 @@ variable "user_name" {
   type    = string
   default = "server"
 }
+
+variable "hostname_base" {
+  type    = string
+  default = "k3s-node"
+}
