@@ -41,12 +41,12 @@ K3s cluster running self-hosted services for personal use.
 ### Infrastructure
 | Logo | Name | Description |
 |:-:|-----|-------------|
-| ![Fedora](https://cdn.simpleicons.org/fedora?size=32) | Fedora | Linux Distribution |
+| ![Fedora](https://cdn.simpleicons.org/fedora?size=32) | Fedora 43 | Linux Distribution used on Host, VMs and Workstation |
 | ![QEMU](https://cdn.simpleicons.org/qemu?size=32) | QEMU/KVM | Hypervisor for running virtual machines |
 | ![K3s](https://cdn.simpleicons.org/k3s?size=32) | K3s | Lightweight Kubernetes engine |
 | ![FluxCD](https://cdn.simpleicons.org/flux?size=32) | FluxCD | GitOps tool for managing Kubernetes declaratively |
 | ![Terraform](https://cdn.simpleicons.org/terraform?size=32) | Terraform | IaC tool for provisioning infrastructure declaratively |
-| ![Ansible](https://cdn.simpleicons.org/ansible/000?size=32) | Ansible | Automation tool for configuration management of the insfrastructure |
+| ![Ansible](https://cdn.simpleicons.org/ansible/000?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
 
 ### Monitoring
 | Logo | Name | Description |
