@@ -21,7 +21,8 @@ K3s cluster running self-hosted services for personal use.
 │   ├── node-exporter/
 │   └── alertmanager/
 ├── provisioning/           # VM Setup (work-in-progress)
-│   ├── terraform/
+│   ├── terraform/          
+│   └── ansible/        
 ├── services/               # Running services
 │   ├── homepage/
 │   └── jellyfin/
