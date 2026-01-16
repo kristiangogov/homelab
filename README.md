@@ -7,6 +7,7 @@ K3s cluster running self-hosted services for personal use.
 > [K3s initial setup](https://gogov.dev/blog/homelab-initial-setup)  
 > [Adding Observability with Prometheus & Grafana](https://gogov.dev/blog/homelab-observability)  
 > [GitOps, FluxCD Edition](https://gogov.dev/blog/homelab-gitops-fluxcd)  
+> [Moving toward virtualization and other design decisions](https://gogov.dev/blog/design-decisions)  
 
 ## Repo Structure
 ```
