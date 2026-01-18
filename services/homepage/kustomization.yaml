@@ -4,6 +4,6 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - service.yaml
-  - clusterrolebinding.yaml
-  - clusterrole.yaml
-  - serviceaccount.yaml
+  - cluster-role-binding.yaml
+  - cluster-role.yaml
+  - service-account.yaml
