@@ -65,7 +65,7 @@ K3s cluster running self-hosted services for personal use.
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable Dashboard |
 
-**Up next / To do list**: 
+## Up next / To do list
 - (In Progress) Fully automated virtualized setup on the Staging Env
 - Set resource limits
 - Evaluate permissions (RBAC)
