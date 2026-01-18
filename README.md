@@ -65,12 +65,14 @@ K3s cluster running self-hosted services for personal use.
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable Dashboard |
 
-**Up next**: 
-- Implement Secret Management - SOPS or SealedSecrets
+**Up next / To do list**: 
+- (In Progress) Fully automated virtualized setup on the Staging Env
+- Set resource limits
+- Evaluate permissions (RBAC)
+- Implement Secret Management - SOPS
 - Configure AlertManager alerts
 - Set up local DNS, e.g., jellyfin.home.lab
-- Some bright new idea I haven't taught of yet
-- (Implementing) Fully automated virtualized setup
+- Some bright new idea I haven't thought of yet
 
 ## Goal
 
