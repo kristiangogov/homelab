@@ -17,8 +17,21 @@ spec:
         - name: jellyfin
           image: linuxserver/jellyfin:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
           ports:
             - containerPort: 8096
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8096
+            initialDelaySeconds: 30
+            periodSeconds: 30  
           env:
             - name: PUID
               value: "1000"
