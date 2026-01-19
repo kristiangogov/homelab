@@ -67,7 +67,6 @@ K3s cluster running self-hosted services for personal use.
 
 ## Up next / To do list
 - (In Progress) Fully automated virtualized setup on the Staging Env
-- Set resource limits
 - Evaluate permissions (RBAC)
 - Implement Secret Management - SOPS
 - Configure AlertManager alerts
