@@ -1,0 +1,12 @@
+[physical]
+yoga ansible_host=yoga ansible_user=server
+thinkpad ansible_host=thinkpad ansible_user=b1ur
+
+[vms]
+%{ for index, ip in vm_ips ~}
+k3s-node-${index} ansible_host=${ip[0]} ansible_user=server
+%{ endfor ~}
+
+[everything:children]
+physical
+vms
