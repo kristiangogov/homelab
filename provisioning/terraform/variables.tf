@@ -23,3 +23,14 @@ variable "hostname_base" {
   type    = string
   default = "k3s-node"
 }
+
+variable "ssh_keys" {
+  type        = list(string)
+  description = "List of public SSH keys to inject into the VM"
+}
+
+variable "server_password" {
+  type        = string
+  description = "The default password for the server user"
+  sensitive   = true
+}

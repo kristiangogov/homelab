@@ -31,8 +31,10 @@ data "cloudinit_config" "commoninit" {
   part {
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/cloud_init.cfg", {
-      hostname  = "${var.hostname_base}-${count.index}"
-      user_name = var.user_name
+      hostname        = "${var.hostname_base}-${count.index}"
+      user_name       = var.user_name
+      ssh_keys        = jsonencode(var.ssh_keys) 
+      server_password = var.server_password
     })
   }
 }
