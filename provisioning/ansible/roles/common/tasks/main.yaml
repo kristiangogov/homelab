@@ -1,0 +1,59 @@
+- name: Update all packages to the latest version
+  become: true
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Install 'dnf-utils' for the reboot check
+  become: true
+  ansible.builtin.dnf:
+    name: dnf-utils
+    state: present
+
+- name: Install essential tools
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - vim
+      - git
+      - curl
+      - htop
+      - tar
+    state: present
+
+- name: Check if a reboot is required
+  become: true
+  ansible.builtin.command: needs-restarting -r
+  register: reboot_required
+  ignore_errors: yes
+  failed_when: false
+  changed_when: false
+
+- name: Reboot node if kernel was updated
+  become: true
+  ansible.builtin.reboot:
+    msg: "Rebooting to apply kernel updates"
+  when: reboot_required.rc != 0
+
+- name: Install firewalld and python3-firewall
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - firewalld
+      - python3-firewall
+    state: present
+
+- name: Ensure firewalld is started and enabled
+  become: true
+  ansible.builtin.systemd:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Disable firewalld (K3s will manage its own networking)
+  become: true
+  ansible.builtin.systemd:
+    name: firewalld
+    state: stopped
+    enabled: false

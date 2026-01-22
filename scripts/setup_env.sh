@@ -22,7 +22,9 @@ fi
 PROVISIONING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
 export ANSIBLE_CONFIG="$PROVISIONING_DIR/ansible/ansible.cfg"
 export ANSIBLE_INVENTORY="$PROVISIONING_DIR/ansible/inventory/inventory.ini"
+export KUBECONFIG="../k3s-homelab.yaml"
 
 echo "Environment Ready!"
 echo "ANSIBLE_CONFIG: $ANSIBLE_CONFIG"
+echo "KUBECONFIG: $KUBECONFIG"
 echo "Current Host: $(hostname)"

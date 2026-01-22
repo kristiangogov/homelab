@@ -1,0 +1,33 @@
+- name: Install K3s Server
+  ansible.builtin.shell: >
+    curl -sfL https://get.k3s.io | sh -s - server 
+    --write-kubeconfig-mode 644
+  args:
+    creates: /usr/local/bin/k3s
+
+- name: Wait for Node Token to be generated
+  ansible.builtin.wait_for:
+    path: /var/lib/rancher/k3s/server/node-token
+
+- name: Read Node Token
+  ansible.builtin.slurp:
+    src: /var/lib/rancher/k3s/server/node-token
+  register: node_token_encoded
+
+- name: Store Token as a dummy host variable
+  ansible.builtin.set_fact:
+    k3s_token: "{{ node_token_encoded['content'] | b64decode | trim }}"
+
+- name: Fetch Kubeconfig to Legion
+  ansible.builtin.fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: ../../k3s-homelab.yaml
+    flat: yes
+
+- name: Update Server IP in local Kubeconfig
+  delegate_to: localhost
+  become: false
+  ansible.builtin.replace:
+    path: ../../k3s-homelab.yaml
+    regexp: '127.0.0.1'
+    replace: "{{ hostvars['k3s-node-0']['ansible_host'] }}"

@@ -90,10 +90,17 @@ resource "local_file" "ansible_inventory" {
 yoga ansible_host=yoga ansible_user=server
 thinkpad ansible_host=thinkpad ansible_user=b1ur
 
-[vms]
-%{ for vm in libvirt_domain.k3s_node ~}
-${vm.name} ansible_host=${vm.network_interface[0].addresses[0]} ansible_user=server
+[k3s_server]
+${libvirt_domain.k3s_node[0].name} ansible_host=${libvirt_domain.k3s_node[0].network_interface[0].addresses[0]} ansible_user=server
+
+[k3s_agents]
+%{ for i in range(1, length(libvirt_domain.k3s_node)) ~}
+${libvirt_domain.k3s_node[i].name} ansible_host=${libvirt_domain.k3s_node[i].network_interface[0].addresses[0]} ansible_user=server
 %{ endfor ~}
+
+[vms:children]
+k3s_server
+k3s_agents
 
 [everything:children]
 physical
