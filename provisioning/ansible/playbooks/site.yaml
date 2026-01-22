@@ -9,7 +9,6 @@
   roles:
     - k3s_master
 
-# STEP 3: Kubernetes Workers
 - name: Join K3s Workers
   hosts: k3s_agents
   become: true

@@ -44,13 +44,6 @@
       - python3-firewall
     state: present
 
-- name: Ensure firewalld is started and enabled
-  become: true
-  ansible.builtin.systemd:
-    name: firewalld
-    state: started
-    enabled: true
-
 - name: Disable firewalld (K3s will manage its own networking)
   become: true
   ansible.builtin.systemd:
