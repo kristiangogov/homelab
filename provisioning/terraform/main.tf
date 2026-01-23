@@ -15,12 +15,20 @@ provider "libvirt" {
   uri = "qemu+ssh://server@yoga/system"
 }
 
-resource "libvirt_volume" "fedora_volume" {
-  count  = var.node_count
-  name   = "fedora-node-${count.index}.qcow2"
+resource "libvirt_volume" "fedora_base" {
+  name   = "fedora-base"
   pool   = "default"
   source = "https://download.fedoraproject.org/pub/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2"
   format = "qcow2"
+}
+
+resource "libvirt_volume" "fedora_volume" {
+  count          = var.node_count
+  name           = "fedora-node-${count.index}.qcow2"
+  pool           = "default"
+  base_volume_id = libvirt_volume.fedora_base.id
+  size           = 21474836480 # 20GB in bytes
+  format         = "qcow2"
 }
 
 data "cloudinit_config" "commoninit" {

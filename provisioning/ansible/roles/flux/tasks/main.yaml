@@ -1,0 +1,29 @@
+- name: Check if Flux is already installed
+  shell: kubectl get ns flux-system
+  register: flux_check
+  failed_when: false
+  changed_when: false
+
+- name: Install Flux CLI
+  shell: |
+    curl -s https://fluxcd.io/install.sh | bash
+  when: flux_check.rc != 0
+
+- name: Bootstrap FluxCD to GitHub
+  shell: |
+    flux bootstrap github \
+      --owner=kristiangogov \
+      --repository=homelab \
+      --branch=main \
+      --path=./ \
+      --personal \
+      --token-auth
+  environment:
+    GITHUB_TOKEN: "{{ vault_github_token }}"
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: flux_check.rc != 0
+  run_once: true
+
+- name: Wait for Flux to be ready
+  shell: kubectl wait --for=condition=ready pod -l app=source-controller -n flux-system --timeout=120s
+  when: flux_check.rc != 0

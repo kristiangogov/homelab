@@ -14,3 +14,9 @@
   become: true
   roles:
     - k3s_agent
+
+- name: Bootstrap Flux
+  hosts: k3s_server
+  become: true
+  roles:
+    - flux

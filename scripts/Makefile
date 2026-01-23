@@ -1,4 +1,4 @@
-.PHONY: help ping plan apply destroy rebuild provision check-route setup-env
+.PHONY: help ping plan apply destroy rebuild provision check-route
 
 ANSIBLE_DIR := $(abspath $(CURDIR)/../provisioning/ansible)
 TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform)
@@ -34,9 +34,6 @@ provision:
 	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/site.yaml
 
 check-route:
-	@ip route get 192.168.122.90 > /dev/null 2>&1 || \
+	@ip route get 192.168.122.0/24 > /dev/null 2>&1 || \
 	(echo "Route missing! Run: sudo ip route add 192.168.122.0/24 via 192.168.0.109" && exit 1)
 	@echo "Route to VMs is active."
-
-setup-env: check-route
-	@source ./setup_env.sh

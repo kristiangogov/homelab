@@ -4,5 +4,8 @@
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
-k3s-homelab.yaml
 
+
+# Others
+.vault_pass
+k3s-homelab.yaml
