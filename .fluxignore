@@ -1,0 +1,4 @@
+provisioning/
+scripts/
+terraform/
+**.md
