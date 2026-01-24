@@ -1,0 +1,28 @@
+- name: Install RPM Fusion (free)
+  dnf:
+    name: "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm"
+    state: present
+    disable_gpg_check: true
+  when: run_system_update
+
+- name: Install RPM Fusion (nonfree)
+  dnf:
+    name: "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm"
+    state: present
+    disable_gpg_check: true
+  when: run_system_update
+
+- name: Upgrade system
+  dnf:
+    name: "*"
+    state: latest
+  when: run_system_update
+
+- name: Refresh fwupd metadata
+  command: fwupdmgr refresh --force
+  when: run_firmware_update
+  changed_when: false
+
+- name: Install firmware updates
+  command: fwupdmgr update -y
+  when: run_firmware_update

@@ -1,0 +1,47 @@
+- name: Install virtualization packages
+  dnf:
+    name: "@virtualization"
+    state: present
+  when: virtualization
+  tags:
+    - virt
+    - update
+
+- name: Ensure 'server' is in the libvirt group
+  user:
+    name: server
+    groups: libvirt
+    append: yes
+  become: true
+  tags:
+    - libvirt
+
+- name: Ensure the storage directory exists
+  ansible.builtin.file:
+    path: "/var/lib/libvirt/images"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Define and manage the libvirt storage pool
+  community.libvirt.virt_pool:
+    command: define
+    name: "default"
+    xml: |
+      <pool type='dir'>
+        <name>default</name>
+        <target>
+          <path>/var/lib/libvirt/images</path>
+        </target>
+      </pool>
+  become: true
+
+- name: Ensure the pool is build, started, and set to autostart
+  community.libvirt.virt_pool:
+    name: "default"
+    state: active
+    autostart: yes
+    command: create
+  become: true

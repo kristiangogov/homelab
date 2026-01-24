@@ -1,0 +1,12 @@
+- name: Install Tailscale repository and package
+  dnf:
+    name: tailscale
+    state: present
+  become: true
+
+- name: Ensure Tailscale service is enabled and started
+  systemd:
+    name: tailscaled
+    enabled: yes
+    state: started
+  become: true

@@ -1,0 +1,15 @@
+- name: Fedora 43 KDE Server Setup
+  hosts: fedora
+  become: true
+
+  vars_prompt:
+  - name: target_hostname
+    prompt: "Enter hostname"
+    default: "fedora"
+    private: false
+
+  roles:
+    - update
+    - hostname # Only run once
+    - virtualization
+    - tailscale

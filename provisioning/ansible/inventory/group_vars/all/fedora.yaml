@@ -1,0 +1,3 @@
+run_system_update: true
+run_firmware_update: true
+virtualization: true

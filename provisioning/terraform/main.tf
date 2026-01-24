@@ -94,6 +94,9 @@ output "vm_ips" {
 resource "local_file" "ansible_inventory" {
   filename = "${path.module}/../ansible/inventory/inventory.ini"
   content  = <<EOT
+[fedora]
+192.168.0.109 ansible_user=server
+
 [physical]
 yoga ansible_host=yoga ansible_user=server
 thinkpad ansible_host=thinkpad ansible_user=b1ur

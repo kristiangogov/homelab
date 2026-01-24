@@ -31,7 +31,11 @@ rebuild: destroy apply
 
 provision:
 	@echo "Running Ansible Playbooks..."
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/site.yaml
+	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/vms.yaml
+
+provision-host:
+	@echo "Running Ansible Playbooks..."
+	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/host.yaml --ask-become-pass
 
 check-route:
 	@ip route get 192.168.122.0/24 > /dev/null 2>&1 || \
