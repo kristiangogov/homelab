@@ -1,6 +1,10 @@
 # Homelab
+![Terraform](https://img.shields.io/badge/Terraform-1.5+-623CE4?logo=terraform&style=flat-square)
+![Ansible](https://img.shields.io/badge/Ansible-2.15+-EE0000?logo=ansible&style=flat-square)
+![Kubernetes](https://img.shields.io/badge/K3s-v1.28+-326CE5?logo=kubernetes&style=flat-square)
+![GitOps](https://img.shields.io/badge/GitOps-FluxCD-00ADD8?logo=flux&style=flat-square)
 
-K3s cluster running self-hosted services for personal use.
+K3s cluster running self-hosted services with a focus on **Total Reproducibility** and **Environment Isolation**.
 
 > [!NOTE] 
 > You can find detailed write-ups on my blog:  
@@ -9,6 +13,44 @@ K3s cluster running self-hosted services for personal use.
 > [GitOps, FluxCD Edition](https://gogov.dev/blog/homelab-gitops-fluxcd)  
 > [Moving toward virtualization and other design decisions](https://gogov.dev/blog/design-decisions)  
 > [Manual to Makefile - Terraform, KVM, Ansible](https://gogov.dev/blog/homelab-terraform-libvirt)  
+> [The Complete Pipeline - End-to-end IaC GitOps](https://gogov.dev/blog/end-to-end-iac-gitops)  
+
+## 🚀 Quick Start (15-Minute Rebuild)
+
+To reproduce this entire environment on a fresh Fedora host:
+
+1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added.
+2. **Execute Pipeline:**
+   ```bash
+   cd scripts/
+   source ./setup_env.sh  # Sets up your shell environment
+   make provision-host    # Configures KVM/libvirt & Tailscale
+   make apply             # Provisions VMs via Terraform
+   make provision         # Bootstraps K3s & FluxCD
+   ```
+
+### Architecture
+
+
+```mermaid
+graph TD
+    subgraph Workstation
+    A[Makefile] --> B[Terraform]
+    A --> C[Ansible]
+    end
+    
+    subgraph Host_Fedora
+    B --> D[QEMU/KVM VMs]
+    C --> D
+    end
+    
+    subgraph Kubernetes_Cluster
+    D --> E[K3s Control Plane]
+    E --> F[FluxCD]
+    F -.-> G[(GitHub Repo)]
+    F --> H[Apps/Monitoring]
+    end
+```
 
 ## Repo Structure
 ```
@@ -22,13 +64,13 @@ K3s cluster running self-hosted services for personal use.
 │   ├── kube-state-metrics/
 │   ├── node-exporter/
 │   └── alertmanager/
-├── provisioning/           # VM Setup (work-in-progress)
+├── provisioning/           # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
 ├── services/               # Running services
 │   ├── homepage/
 │   └── jellyfin/
-└── scripts/                # Placeholder
+└── scripts/                # Makefile and environment setup
 ```
 
 ## Tooling overview
@@ -67,7 +109,7 @@ K3s cluster running self-hosted services for personal use.
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable Dashboard |
 
 ## Up next / To do list
-- (In Progress) Fully automated virtualized setup on the Staging Env
+- Advanced Network Policy implementation (Network Overhaul)
 - Evaluate permissions (RBAC)
 - Implement Secret Management - SOPS
 - Configure AlertManager alerts
