@@ -15,7 +15,7 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 > [Manual to Makefile - Terraform, KVM, Ansible](https://gogov.dev/blog/homelab-terraform-libvirt)  
 > [The Complete Pipeline - End-to-end IaC GitOps](https://gogov.dev/blog/end-to-end-iac-gitops)  
 
-## 🚀 Quick Start (15-Minute Rebuild)
+## Quick Start 🚀
 
 To reproduce this entire environment on a fresh Fedora host:
 
