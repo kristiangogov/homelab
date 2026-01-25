@@ -19,8 +19,25 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 
 To reproduce this entire environment on a fresh Fedora host:
 
+### Prerequisites:
 1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added.
-2. **Execute Pipeline:**
+2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
+(preferably via Ansible Vault secret as currently implemented)
+3. **Terraform Variables**: Provide the following file in provisioning/terraform/terraform.tfvars:
+```sh
+# Secrets
+server_password = "YOUR_VM_PASSWORD"
+ssh_keys = [
+  "YOUR_SSH_KEY" 
+]
+# Variables
+node_count    = 2
+vm_memory     = "2048"
+vm_vcpu       = 2
+user_name     = "server"
+hostname_base = "k3s-node"
+```
+4. **Execute Pipeline:**
    ```bash
    cd scripts/
    source ./setup_env.sh  # Sets up your shell environment
