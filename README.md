@@ -38,15 +38,15 @@ user_name     = "server"
 hostname_base = "k3s-node"
 ```
 4. **Execute Pipeline:**
-   ```bash
-   cd scripts/
-   source ./setup_env.sh  # Sets up your shell environment
-   make provision-host    # Configures KVM/libvirt & Tailscale
-   make apply             # Provisions VMs via Terraform
-   make provision         # Bootstraps K3s & FluxCD
-   ```
+```bash
+cd scripts/
+source ./setup_env.sh  # Sets up your shell environment
+make provision-host    # Configures KVM/libvirt & Tailscale
+make apply             # Provisions VMs via Terraform
+make provision         # Bootstraps K3s & FluxCD
+```
 
-### Architecture
+## Architecture
 
 
 ```mermaid
