@@ -48,26 +48,11 @@ make provision         # Bootstraps K3s & FluxCD
 
 ## Architecture
 
-
-```mermaid
-graph TD
-    subgraph Workstation
-    A[Makefile] --> B[Terraform]
-    A --> C[Ansible]
-    end
-    
-    subgraph Host_Fedora
-    B --> D[QEMU/KVM VMs]
-    C --> D
-    end
-    
-    subgraph Kubernetes_Cluster
-    D --> E[K3s Control Plane]
-    E --> F[FluxCD]
-    F -.-> G[(GitHub Repo)]
-    F --> H[Apps/Monitoring]
-    end
-```
+![High-level overview.](resources/full.png)
+- [High-level overview](resources/high-level.png)
+- [Bare-metal configuration](resources/bare-metal.png)
+- [Infrastructure creation (VMs)](resources/bare-metal.png)
+- [Infrastructure configuration](resources/bare-metal.png)
 
 ## Repo Structure
 ```
