@@ -14,8 +14,8 @@
     flux bootstrap github \
       --owner=kristiangogov \
       --repository=homelab \
-      --branch=main \
-      --path=./ \
+      --branch=staging \
+      --path=clusters/staging \
       --personal \
       --token-auth
   environment:
