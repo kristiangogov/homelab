@@ -25,18 +25,15 @@
   run_once: true
 
 - name: Create sops-age secret for FluxCD
-  kubernetes.core.k8s:
-    kubeconfig: /etc/rancher/k3s/k3s.yaml
-    state: present
-    definition:
-      apiVersion: v1
-      kind: Secret
-      metadata:
-        name: sops-age
-        namespace: flux-system
-      type: Opaque
-      stringData:
-        age.agekey: "{{ sops_age_private_key }}" 
+  ansible.builtin.shell: |
+    kubectl create secret generic sops-age \
+      --namespace=flux-system \
+      --from-literal=age.agekey='{{ sops_age_private_key }}' \
+      --dry-run=client -o yaml | kubectl apply -f -
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  run_once: true
+  become: true
 
 - name: Wait for Flux to be ready
   shell: kubectl wait --for=condition=ready pod -l app=source-controller -n flux-system --timeout=120s
