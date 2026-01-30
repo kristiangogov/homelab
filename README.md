@@ -48,7 +48,7 @@ make provision         # Bootstraps K3s & FluxCD
 
 ## Architecture
 
-![High-level overview.](resources/full.png)
+![Full diagram](resources/full.png)
 - [High-level overview](resources/high-level.png)
 - [Bare-metal configuration](resources/bare-metal.png)
 - [Infrastructure creation (VMs)](resources/infra.png)
