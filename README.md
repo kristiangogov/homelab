@@ -57,22 +57,25 @@ make provision         # Bootstraps K3s & FluxCD
 ## Repo Structure
 ```
 .
-├── flux-system/            # GitOps
-├── infrastructure/         # Cluster-wide setup
+├── clusters/                # GitOps via FluxCD
+│   ├── production/
+│   ├── staging/
+├── infrastructure/          # Cluster-wide setup
 │   └── namespaces/
-├── monitoring/             # Monitoring stack
+├── monitoring/              # Monitoring stack
 │   ├── grafana/
 │   ├── prometheus/
 │   ├── kube-state-metrics/
 │   ├── node-exporter/
 │   └── alertmanager/
-├── provisioning/           # IaC and Configuration
+├── provisioning/            # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
-├── services/               # Running services
-│   ├── homepage/
-│   └── jellyfin/
-└── scripts/                # Makefile and environment setup
+├── recources/               # README resources
+├── scripts/                 # Makefile and environment setup
+└── services/                # Services
+    ├── homepage/
+    └── jellyfin/
 ```
 
 ## Tooling overview

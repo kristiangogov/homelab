@@ -28,7 +28,7 @@ spec:
               mountPath: /var/lib/grafana
       containers:
         - name: grafana
-          image: grafana/grafana:latest
+          image: grafana/grafana:12.3
           resources:
             requests:
               cpu: 50m
