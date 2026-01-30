@@ -18,7 +18,7 @@ spec:
       hostPID: true
       containers:
         - name: node-exporter
-          image: prom/node-exporter:latest
+          image: prom/node-exporter:v1.10.2
           resources:
             requests:
               cpu: 10m

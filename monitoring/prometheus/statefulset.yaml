@@ -28,7 +28,7 @@ spec:
               mountPath: /prometheus
       containers:
         - name: prometheus
-          image: prom/prometheus:latest
+          image: prom/prometheus:v3.9.1
           resources:
             requests:
               cpu: 50m
