@@ -51,8 +51,8 @@ make provision         # Bootstraps K3s & FluxCD
 ![High-level overview.](resources/full.png)
 - [High-level overview](resources/high-level.png)
 - [Bare-metal configuration](resources/bare-metal.png)
-- [Infrastructure creation (VMs)](resources/bare-metal.png)
-- [Infrastructure configuration](resources/bare-metal.png)
+- [Infrastructure creation (VMs)](resources/infra.png)
+- [Infrastructure configuration](resources/vm.png)
 
 ## Repo Structure
 ```
