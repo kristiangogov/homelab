@@ -9,20 +9,12 @@
     curl -s https://fluxcd.io/install.sh | bash
   when: flux_check.rc != 0
 
-- name: Bootstrap FluxCD to GitHub
-  shell: |
-    flux bootstrap github \
-      --owner=kristiangogov \
-      --repository=homelab \
-      --branch=staging \
-      --path=clusters/staging \
-      --personal \
-      --token-auth
-  environment:
-    GITHUB_TOKEN: "{{ vault_github_token }}"
-    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+- name: Create flux-system namespace
+  kubernetes.core.k8s:
+    name: flux-system
+    kind: Namespace
+    state: present
   when: flux_check.rc != 0
-  run_once: true
 
 - name: Create sops-age secret for FluxCD
   ansible.builtin.shell: |
@@ -33,8 +25,26 @@
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   run_once: true
-  become: true
+  when: flux_check.rc != 0
 
-- name: Wait for Flux to be ready
+- name: Seed FluxCD from Git Manifests
+  shell: |
+    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/staging/clusters/staging/flux-system/gotk-components.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/staging/clusters/staging/flux-system/gotk-sync.yaml
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: flux_check.rc != 0
+  run_once: true
+
+- name: Wait for Flux Controllers to be ready
   shell: kubectl wait --for=condition=ready pod -l app=source-controller -n flux-system --timeout=120s
   when: flux_check.rc != 0
+
+- name: Force final reconciliation
+  shell: |
+    flux reconcile source git flux-system
+    flux reconcile kustomization flux-system
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: flux_check.rc != 0
+  ignore_errors: true
