@@ -49,10 +49,6 @@ make provision         # Bootstraps K3s & FluxCD
 ## Architecture
 
 ![Full diagram](resources/full.png)
-- [High-level overview](resources/high-level.png)
-- [Bare-metal configuration](resources/bare-metal.png)
-- [Infrastructure creation (VMs)](resources/infra.png)
-- [Infrastructure configuration](resources/vm.png)
 
 ## Repo Structure
 ```
@@ -95,7 +91,8 @@ make provision         # Bootstraps K3s & FluxCD
 | ![K3s](https://cdn.simpleicons.org/k3s?size=32) | K3s | Lightweight Kubernetes engine |
 | ![FluxCD](https://cdn.simpleicons.org/flux?size=32) | FluxCD | GitOps tool for managing Kubernetes declaratively |
 | ![Terraform](https://cdn.simpleicons.org/terraform?size=32) | Terraform | IaC tool for provisioning infrastructure declaratively |
-| ![Ansible](https://cdn.simpleicons.org/ansible/000?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
+| ![Ansible](https://cdn.simpleicons.org/ansible/f00?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
+| ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
 
 ### Monitoring
 | Logo | Name | Description |
@@ -111,14 +108,13 @@ make provision         # Bootstraps K3s & FluxCD
 | Logo | Name | Description |
 |:-:|-----|-------------|
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
-| ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable Dashboard |
+| ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- Advanced Network Policy implementation (Network Overhaul)
+- Network overhaul with Cilium and Gateway API
 - Evaluate permissions (RBAC)
-- Implement Secret Management - SOPS
 - Configure AlertManager alerts
-- Set up local DNS, e.g., jellyfin.home.lab
+- Set up local DNS
 - Some bright new idea I haven't thought of yet
 
 ## Goal
