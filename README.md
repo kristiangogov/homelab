@@ -67,7 +67,7 @@ make provision         # Bootstraps K3s & FluxCD
 ├── provisioning/            # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
-├── recources/               # README resources
+├── resources/               # README resources
 ├── scripts/                 # Makefile and environment setup
 └── services/                # Services
     ├── homepage/
