@@ -10,14 +10,26 @@
   when: flux_check.rc != 0
 
 - name: Create flux-system namespace
-  kubernetes.core.k8s:
-    name: flux-system
-    kind: Namespace
-    state: present
+  shell: kubectl create namespace flux-system
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: flux_check.rc != 0
+  failed_when: false
+
+- name: Create GitHub credentials secret
+  shell: |
+    kubectl create secret generic flux-system \
+      --namespace=flux-system \
+      --from-literal=username=kristiangogov \
+      --from-literal=password='{{ vault_github_token }}' \
+      --dry-run=client -o yaml | kubectl apply -f -
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  run_once: true
   when: flux_check.rc != 0
 
-- name: Create sops-age secret for FluxCD
-  ansible.builtin.shell: |
+- name: Create sops-age secret for decryption
+  shell: |
     kubectl create secret generic sops-age \
       --namespace=flux-system \
       --from-literal=age.agekey='{{ sops_age_private_key }}' \
@@ -37,7 +49,10 @@
   run_once: true
 
 - name: Wait for Flux Controllers to be ready
-  shell: kubectl wait --for=condition=ready pod -l app=source-controller -n flux-system --timeout=120s
+  shell: |
+    kubectl wait --for=condition=ready pod -l app.kubernetes.io/part-of=flux -n flux-system --timeout=300s
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: flux_check.rc != 0
 
 - name: Force final reconciliation
