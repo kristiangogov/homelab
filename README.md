@@ -14,6 +14,7 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 > [Moving toward virtualization and other design decisions](https://gogov.dev/blog/design-decisions)  
 > [Manual to Makefile - Terraform, KVM, Ansible](https://gogov.dev/blog/homelab-terraform-libvirt)  
 > [The Complete Pipeline - End-to-end IaC GitOps](https://gogov.dev/blog/end-to-end-iac-gitops)  
+> [Implementing SOPS - GitOps secrets management](https://gogov.dev/blog/sops-secret-management)  
 
 ## Quick Start 🚀
 
