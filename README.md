@@ -14,6 +14,7 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 > [Moving toward virtualization and other design decisions](https://gogov.dev/blog/design-decisions)  
 > [Manual to Makefile - Terraform, KVM, Ansible](https://gogov.dev/blog/homelab-terraform-libvirt)  
 > [The Complete Pipeline - End-to-end IaC GitOps](https://gogov.dev/blog/end-to-end-iac-gitops)  
+> [Implementing SOPS - GitOps secrets management](https://gogov.dev/blog/sops-secret-management)  
 
 ## Quick Start 🚀
 
@@ -95,7 +96,8 @@ make provision         # Bootstraps K3s & FluxCD
 | ![K3s](https://cdn.simpleicons.org/k3s?size=32) | K3s | Lightweight Kubernetes engine |
 | ![FluxCD](https://cdn.simpleicons.org/flux?size=32) | FluxCD | GitOps tool for managing Kubernetes declaratively |
 | ![Terraform](https://cdn.simpleicons.org/terraform?size=32) | Terraform | IaC tool for provisioning infrastructure declaratively |
-| ![Ansible](https://cdn.simpleicons.org/ansible/000?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
+| ![Ansible](https://cdn.simpleicons.org/ansible/f00?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
+| ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
 
 ### Monitoring
 | Logo | Name | Description |
@@ -116,7 +118,6 @@ make provision         # Bootstraps K3s & FluxCD
 ## Up next / To do list
 - Advanced Network Policy implementation (Network Overhaul)
 - Evaluate permissions (RBAC)
-- Implement Secret Management - SOPS
 - Configure AlertManager alerts
 - Set up local DNS, e.g., jellyfin.home.lab
 - Some bright new idea I haven't thought of yet
