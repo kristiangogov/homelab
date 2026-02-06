@@ -9,21 +9,57 @@
     curl -s https://fluxcd.io/install.sh | bash
   when: flux_check.rc != 0
 
-- name: Bootstrap FluxCD to GitHub
-  shell: |
-    flux bootstrap github \
-      --owner=kristiangogov \
-      --repository=homelab \
-      --branch=staging \
-      --path=clusters/staging \
-      --personal \
-      --token-auth
+- name: Create flux-system namespace
+  shell: kubectl create namespace flux-system
   environment:
-    GITHUB_TOKEN: "{{ vault_github_token }}"
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: flux_check.rc != 0
+  failed_when: false
+
+- name: Create GitHub credentials secret
+  shell: |
+    kubectl create secret generic flux-system \
+      --namespace=flux-system \
+      --from-literal=username=kristiangogov \
+      --from-literal=password='{{ vault_github_token }}' \
+      --dry-run=client -o yaml | kubectl apply -f -
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  run_once: true
+  when: flux_check.rc != 0
+
+- name: Create sops-age secret for decryption
+  shell: |
+    kubectl create secret generic sops-age \
+      --namespace=flux-system \
+      --from-literal=age.agekey='{{ sops_age_private_key }}' \
+      --dry-run=client -o yaml | kubectl apply -f -
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  run_once: true
+  when: flux_check.rc != 0
+
+- name: Seed FluxCD from Git Manifests
+  shell: |
+    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/staging/clusters/staging/flux-system/gotk-components.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/staging/clusters/staging/flux-system/gotk-sync.yaml
+  environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: flux_check.rc != 0
   run_once: true
 
-- name: Wait for Flux to be ready
-  shell: kubectl wait --for=condition=ready pod -l app=source-controller -n flux-system --timeout=120s
+- name: Wait for Flux Controllers to be ready
+  shell: |
+    kubectl wait --for=condition=ready pod -l app.kubernetes.io/part-of=flux -n flux-system --timeout=300s
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: flux_check.rc != 0
+
+- name: Force final reconciliation
+  shell: |
+    flux reconcile source git flux-system
+    flux reconcile kustomization flux-system
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+  when: flux_check.rc != 0
+  ignore_errors: true

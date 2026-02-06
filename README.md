@@ -50,10 +50,6 @@ make provision         # Bootstraps K3s & FluxCD
 ## Architecture
 
 ![Full diagram](resources/full.png)
-- [High-level overview](resources/high-level.png)
-- [Bare-metal configuration](resources/bare-metal.png)
-- [Infrastructure creation (VMs)](resources/infra.png)
-- [Infrastructure configuration](resources/vm.png)
 
 ## Repo Structure
 ```
@@ -72,7 +68,7 @@ make provision         # Bootstraps K3s & FluxCD
 ├── provisioning/            # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
-├── recources/               # README resources
+├── resources/               # README resources
 ├── scripts/                 # Makefile and environment setup
 └── services/                # Services
     ├── homepage/
@@ -113,13 +109,13 @@ make provision         # Bootstraps K3s & FluxCD
 | Logo | Name | Description |
 |:-:|-----|-------------|
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
-| ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable Dashboard |
+| ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- Advanced Network Policy implementation (Network Overhaul)
+- Network overhaul with Cilium and Gateway API
 - Evaluate permissions (RBAC)
 - Configure AlertManager alerts
-- Set up local DNS, e.g., jellyfin.home.lab
+- Set up local DNS
 - Some bright new idea I haven't thought of yet
 
 ## Goal

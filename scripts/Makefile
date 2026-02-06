@@ -1,4 +1,4 @@
-.PHONY: help ping plan apply destroy rebuild provision check-route
+.PHONY: help ping plan apply destroy get-ips rebuild provision check-route
 
 ANSIBLE_DIR := $(abspath $(CURDIR)/../provisioning/ansible)
 TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform)
@@ -23,6 +23,9 @@ apply:
 
 destroy:
 	cd $(TERRAFORM_DIR) && terraform destroy	
+
+get-ips:
+	cd $(TERRAFORM_DIR) && terraform output vm_ips
 
 rebuild: destroy apply
 	@echo "Waiting 15 seconds for VMs to boot..."
