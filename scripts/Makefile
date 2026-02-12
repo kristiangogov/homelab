@@ -1,4 +1,4 @@
-.PHONY: help ping plan apply destroy get-ips rebuild provision check-route
+.PHONY: help ping plan apply destroy get-ips rebuild provision provision-host check-route
 
 ANSIBLE_DIR := $(abspath $(CURDIR)/../provisioning/ansible)
 TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform)
