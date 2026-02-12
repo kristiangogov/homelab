@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - cilium-lb-ipam-pool.yaml
   - cilium-l2-announcement.yaml
+  - coredns-custom.yaml
