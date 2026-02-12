@@ -1,7 +1,7 @@
 - name: Install K3s Server
   ansible.builtin.shell: >
     curl -sfL https://get.k3s.io | 
-    INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik' 
+    INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik --disable=servicelb' 
     sh -s - server --write-kubeconfig-mode 644
   args:
     creates: /usr/local/bin/k3s
@@ -65,5 +65,9 @@
         enabled: true
         loadbalancerMode: shared
         default: true
+      l2announcements:
+        enabled: true
+      externalIPs:
+        enabled: true
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
