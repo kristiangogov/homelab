@@ -8,4 +8,9 @@ spec:
   - ^ens.*
   - ^eth.*
   nodeSelector:
+    matchExpressions:
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+  externalIPs: true
+  serviceSelector:
     matchLabels: {}
