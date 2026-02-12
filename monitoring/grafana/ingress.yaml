@@ -3,9 +3,8 @@ kind: Ingress
 metadata:
   name: grafana
   namespace: monitoring
-  annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
+  ingressClassName: cilium
   rules:
   - host: grafana.lab.local
     http:
