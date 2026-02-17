@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./services
+  path: ./services/staging
   prune: true
   decryption:
     provider: sops
