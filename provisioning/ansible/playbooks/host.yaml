@@ -10,6 +10,6 @@
 
   roles:
     - update
-    - hostname # Only run once
+    # - hostname # Only run once
     - virtualization
     - tailscale

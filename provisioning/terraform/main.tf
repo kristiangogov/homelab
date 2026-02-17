@@ -60,6 +60,7 @@ resource "libvirt_domain" "k3s_node" {
   memory = var.vm_memory
   vcpu   = var.vm_vcpu
   type   = "kvm"
+  autostart = true
 
   cloudinit = libvirt_cloudinit_disk.commoninit[count.index].id
 
