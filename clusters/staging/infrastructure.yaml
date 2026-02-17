@@ -8,6 +8,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./staging/infrastructure
+  path: ./infrastructure/staging
   prune: true
   wait: true
