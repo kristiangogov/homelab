@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./monitoring
+  path: ./production/monitoring
   prune: true
   wait: true
   decryption:
