@@ -11,6 +11,7 @@ nginx_services:
   - name: homepage
     host_port: 3100
     node_port: 31000
+    host_header: "192.168.0.109:3100"
   - name: alertmanager
     host_port: 3093
     node_port: 30093
