@@ -34,3 +34,8 @@ variable "server_password" {
   description = "The default password for the server user"
   sensitive   = true
 }
+
+variable "host_ip" {
+  type        = string
+  default     = "192.168.0.109"
+}

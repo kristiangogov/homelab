@@ -96,11 +96,11 @@ resource "local_file" "ansible_inventory" {
   filename = "${path.module}/../ansible/inventory/inventory.ini"
   content  = <<EOT
 [fedora]
-192.168.0.109 ansible_user=server
+${var.host_ip} ansible_user=server
 
 [physical]
 yoga ansible_host=yoga ansible_user=server
-thinkpad ansible_host=thinkpad ansible_user=b1ur
+thinkpad ansible_host=thinkpad ansible_user=server
 
 [k3s_server]
 ${libvirt_domain.k3s_node[0].name} ansible_host=${libvirt_domain.k3s_node[0].network_interface[0].addresses[0]} ansible_user=server
