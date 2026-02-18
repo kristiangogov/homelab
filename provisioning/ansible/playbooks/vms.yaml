@@ -20,3 +20,9 @@
   become: true
   roles:
     - flux
+
+- name: Setup Host Nginx
+  hosts: fedora
+  become: true
+  roles:
+    - configure-nginx-ips

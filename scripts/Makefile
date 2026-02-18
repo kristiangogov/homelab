@@ -40,7 +40,7 @@ auto-rebuild:
 
 provision:
 	@echo "Running Ansible Playbooks..."
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/vms.yaml
+	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/vms.yaml --ask-become-pass
 
 provision-host:
 	@echo "Running Ansible Playbooks..."

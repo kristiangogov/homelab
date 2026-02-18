@@ -1,0 +1,16 @@
+nginx_services:
+  - name: grafana
+    host_port: 3000
+    node_port: 30030
+  - name: jellyfin
+    host_port: 3096
+    node_port: 30096
+  - name: prometheus
+    host_port: 3090
+    node_port: 30090
+  - name: homepage
+    host_port: 3100
+    node_port: 31000
+  - name: alertmanager
+    host_port: 3093
+    node_port: 30093
