@@ -1,6 +1,5 @@
 # Terraform
 .terraform/
-.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
@@ -9,3 +8,4 @@ terraform.tfvars
 # Others
 .vault_pass
 k3s-homelab.yaml
+test

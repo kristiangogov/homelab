@@ -1,7 +1,8 @@
 - name: Install K3s Server
   ansible.builtin.shell: >
-    curl -sfL https://get.k3s.io | sh -s - server 
-    --write-kubeconfig-mode 644
+    curl -sfL https://get.k3s.io | 
+    INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik --disable=servicelb' 
+    sh -s - server --write-kubeconfig-mode 644
   args:
     creates: /usr/local/bin/k3s
 
@@ -31,3 +32,42 @@
     path: ../../../k3s-homelab.yaml
     regexp: '127.0.0.1'
     replace: "{{ hostvars['k3s-node-0']['ansible_host'] }}"
+
+- name: Download and install Helm
+  ansible.builtin.shell: |
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  args:
+    creates: /usr/local/bin/helm
+
+- name: Add Cilium Helm repository
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: https://helm.cilium.io/
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+- name: Install Cilium CNI via Helm
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    chart_version: "1.15.1"
+    release_namespace: kube-system
+    create_namespace: false
+    values:
+      k8sServiceHost: "{{ ansible_default_ipv4.address }}"
+      k8sServicePort: 6443
+      kubeProxyReplacement: strict
+      operator:
+        replicas: 1
+      ipam:
+        mode: kubernetes
+      ingressController:
+        enabled: true
+        loadbalancerMode: shared
+        default: true
+      l2announcements:
+        enabled: true
+      externalIPs:
+        enabled: true
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml

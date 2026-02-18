@@ -1,0 +1,30 @@
+- name: Create nft flush script
+  ansible.builtin.copy:
+    dest: /usr/local/bin/flush-nft.sh
+    mode: '0755'
+    content: |
+      #!/bin/bash
+      nft flush ruleset
+
+- name: Create systemd service to flush nft on boot
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/flush-nft.service
+    content: |
+      [Unit]
+      Description=Flush nftables ruleset on boot
+      After=network.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/bin/flush-nft.sh
+      RemoteIPAddress=yes
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Enable and start flush-nft service
+  ansible.builtin.systemd:
+    name: flush-nft
+    enabled: true
+    state: started
+    daemon_reload: true

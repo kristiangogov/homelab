@@ -1,0 +1,19 @@
+- name: Get k3s master IP from inventory
+  ansible.builtin.set_fact:
+    k3s_master_ip: "{{ hostvars[groups['k3s_server'][0]]['ansible_host'] }}"
+
+- name: Template nginx service configs
+  ansible.builtin.template:
+    src: proxy.conf.j2
+    dest: "/etc/nginx/conf.d/{{ item.name }}.conf"
+    mode: '0644'
+  loop: "{{ nginx_services }}"
+  notify: Reload nginx
+
+- name: Allow nginx ports through SELinux
+  community.general.seport:
+    ports: "{{ item.host_port }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  loop: "{{ nginx_services }}"

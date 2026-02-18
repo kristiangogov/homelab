@@ -2,14 +2,16 @@
   hosts: fedora
   become: true
 
-  vars_prompt:
-  - name: target_hostname
-    prompt: "Enter hostname"
-    default: "fedora"
-    private: false
+  # vars_prompt:
+  # - name: target_hostname
+  #   prompt: "Enter hostname"
+  #   default: "fedora"
+  #   private: false
 
   roles:
+    # - hostname # Only run once
     - update
-    - hostname # Only run once
     - virtualization
     - tailscale
+    - nginx
+    - flush-nft # Temp solution, final firewall config is needed

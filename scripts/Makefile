@@ -1,4 +1,4 @@
-.PHONY: help ping plan apply destroy get-ips rebuild provision check-route
+.PHONY: help ping plan apply destroy get-ips rebuild auto-rebuild provision provision-host check-route
 
 ANSIBLE_DIR := $(abspath $(CURDIR)/../provisioning/ansible)
 TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform)
@@ -32,9 +32,15 @@ rebuild: destroy apply
 	@sleep 15
 	$(MAKE) ping
 
+auto-rebuild:
+	cd $(TERRAFORM_DIR) && terraform destroy -auto-approve
+	cd $(TERRAFORM_DIR) && terraform apply -auto-approve
+	$(MAKE) provision
+	$(MAKE) get-ips
+
 provision:
 	@echo "Running Ansible Playbooks..."
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/vms.yaml
+	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/vms.yaml --ask-become-pass
 
 provision-host:
 	@echo "Running Ansible Playbooks..."
