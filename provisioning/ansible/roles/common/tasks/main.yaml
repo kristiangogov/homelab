@@ -1,9 +1,9 @@
-- name: Update all packages to the latest version
-  become: true
-  ansible.builtin.dnf:
-    name: "*"
-    state: latest
-    update_cache: yes
+# - name: Update all packages to the latest version
+#   become: true
+#   ansible.builtin.dnf:
+#     name: "*"
+#     state: latest
+#     update_cache: yes
 
 - name: Install 'dnf-utils' for the reboot check
   become: true

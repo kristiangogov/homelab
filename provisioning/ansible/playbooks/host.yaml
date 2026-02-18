@@ -2,14 +2,14 @@
   hosts: fedora
   become: true
 
-  # vars_prompt:
-  # - name: target_hostname
-  #   prompt: "Enter hostname"
-  #   default: "fedora"
-  #   private: false
+  vars_prompt:
+  - name: target_hostname
+    prompt: "Enter hostname"
+    default: "fedora"
+    private: false
 
   roles:
-    # - hostname # Only run once
+    - hostname # Only run once
     - update
     - virtualization
     - tailscale

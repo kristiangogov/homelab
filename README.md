@@ -1,8 +1,4 @@
 # Homelab
-![Terraform](https://img.shields.io/badge/Terraform-1.5+-623CE4?logo=terraform&style=flat-square)
-![Ansible](https://img.shields.io/badge/Ansible-2.15+-EE0000?logo=ansible&style=flat-square)
-![Kubernetes](https://img.shields.io/badge/K3s-v1.28+-326CE5?logo=kubernetes&style=flat-square)
-![GitOps](https://img.shields.io/badge/GitOps-FluxCD-00ADD8?logo=flux&style=flat-square)
 
 K3s cluster running self-hosted services with a focus on **Total Reproducibility** and **Environment Isolation**.
 
@@ -21,7 +17,7 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 To reproduce this entire environment on a fresh Fedora host:
 
 ### Prerequisites:
-1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added.
+1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added. Ensure virtualization is enabled at BIOS level.
 2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
 (preferably via Ansible Vault secret as currently implemented)
 3. **Terraform Variables**: Provide the following file in provisioning/terraform/terraform.tfvars:
@@ -56,23 +52,34 @@ make provision         # Bootstraps K3s & FluxCD
 .
 ├── clusters/                # GitOps via FluxCD
 │   ├── production/
-│   ├── staging/
+│   └── staging/
 ├── infrastructure/          # Cluster-wide setup
-│   └── namespaces/
+│   ├── base/                # Base Configuraiton
+│       ├── namespaces/
+│       └── networking/
+│   ├── production/          # Production specific overlays
+│   └── staging/             # Staging specific overlays
 ├── monitoring/              # Monitoring stack
-│   ├── grafana/
-│   ├── prometheus/
-│   ├── kube-state-metrics/
-│   ├── node-exporter/
-│   └── alertmanager/
+│   ├── base/
+│      ├── grafana/
+│      ├── prometheus/
+│      ├── kube-state-metrics/
+│      ├── node-exporter/
+│      └── alertmanager/
+│   ├── production/
+│   └── staging/             # Staging specific overlays
 ├── provisioning/            # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
 ├── resources/               # README resources
 ├── scripts/                 # Makefile and environment setup
-└── services/                # Services
-    ├── homepage/
-    └── jellyfin/
+├── services/                # Services
+│   ├── base/
+│       ├── homepage/
+│       └── jellyfin/
+│   ├── production/
+│   └── staging/
+    
 ```
 
 ## Tooling overview
@@ -80,8 +87,8 @@ make provision         # Bootstraps K3s & FluxCD
 ### Hardware
 | Logo | Device | Role |
 |:-:|-----|-------------|
-| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad T14 Gen 1 | Production (bare-metal) |
-| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging (VM Migration) |
+| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad T14 Gen 1 | Production |
+| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging |
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Legion 5 Slim | Workstation |
 
 ### Infrastructure
@@ -94,6 +101,8 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Terraform](https://cdn.simpleicons.org/terraform?size=32) | Terraform | IaC tool for provisioning infrastructure declaratively |
 | ![Ansible](https://cdn.simpleicons.org/ansible/f00?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
 | ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
+| ![Cilium](https://cdn.simpleicons.org/cilium/size=32) | Cilium | Solution for providing, securing, and observing network connectivity |
+| ![NGINX](https://cdn.simpleicons.org/nginx/size=32) | NGINX | Used as reverse proxy at the host level |
 
 ### Monitoring
 | Logo | Name | Description |
@@ -112,11 +121,10 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- Network overhaul with Cilium and Gateway API
-- Evaluate permissions (RBAC)
-- Configure AlertManager alerts
-- Set up local DNS
-- Some bright new idea I haven't thought of yet
+- Optimizations and reproducibility enhancement
+- Networking fine-tuning
+- Setup and Makefile refinement
+- Implement Kyverno
 
 ## Goal
 

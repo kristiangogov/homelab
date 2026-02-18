@@ -35,7 +35,7 @@ spec:
               memory: 512Mi
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
-              value: 192.168.0.104:31000
+              value: "thinkpad:3100,192.168.0.111:3100,yoga:3100,192.168.0.109:3100"
           ports:
             - name: http
               containerPort: 3000

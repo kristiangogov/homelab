@@ -41,8 +41,8 @@
 
 - name: Seed FluxCD from Git Manifests
   shell: |
-    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/staging/clusters/staging/flux-system/gotk-components.yaml
-    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/staging/clusters/staging/flux-system/gotk-sync.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/main/clusters/production/flux-system/gotk-components.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kristiangogov/homelab/main/clusters/production/flux-system/gotk-sync.yaml
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   when: flux_check.rc != 0

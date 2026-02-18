@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "libvirt" {
-  uri = "qemu+ssh://server@yoga/system"
+  uri = "qemu+ssh://server@thinkpad/system"
 }
 
 resource "libvirt_volume" "fedora_base" {
