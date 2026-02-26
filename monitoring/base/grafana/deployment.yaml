@@ -16,7 +16,6 @@ spec:
       securityContext:
         runAsUser: 472
         runAsGroup: 472
-
       initContainers:
         - name: fix-permissions
           image: busybox
