@@ -15,22 +15,9 @@ spec:
         apiVersions: [v1]
         operations: [CREATE, UPDATE]
         resources: [pods]
-  matchExclusions:
-    - resourceRules:
-        - apiGroups: [""]
-          apiVersions: [v1]
-          resources: [pods]
-          operations: [CREATE, UPDATE]
-      namespaceSelector:
-        matchExpressions:
-          - key: kubernetes.io/metadata.name
-            operator: In
-            values:
-              - kube-system
-              - kyverno
-              - flux-system
   validations:
     - expression: >-
+        object.metadata.namespace in ['kube-system', 'kyverno', 'flux-system'] ||
         object.spec.containers.all(c,
           has(c.resources) &&
           has(c.resources.limits) &&
