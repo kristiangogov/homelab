@@ -15,9 +15,12 @@ spec:
         apiVersions: [v1]
         operations: [CREATE, UPDATE]
         resources: [pods]
+        namespaces:
+          - homepage
+          - jellyfin
+          - monitoring
   validations:
     - expression: >-
-        object.metadata.namespace in ['kube-system', 'kyverno', 'flux-system'] ||
         object.spec.containers.all(c,
           has(c.resources) &&
           has(c.resources.limits) &&
