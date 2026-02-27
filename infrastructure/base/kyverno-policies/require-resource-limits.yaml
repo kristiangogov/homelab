@@ -15,6 +15,20 @@ spec:
         apiVersions: [v1]
         operations: [CREATE, UPDATE]
         resources: [pods]
+  matchExclusions:
+    - resourceRules:
+        - apiGroups: [""]
+          apiVersions: [v1]
+          resources: [pods]
+          operations: [CREATE, UPDATE]
+      namespaceSelector:
+        matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: In
+            values:
+              - kube-system
+              - kyverno
+              - flux-system
   validations:
     - expression: >-
         object.spec.containers.all(c,
