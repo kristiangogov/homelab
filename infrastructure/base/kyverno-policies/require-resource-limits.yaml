@@ -18,7 +18,7 @@ spec:
         namespaces:
           - homepage
           - jellyfin
-          - monitoring
+          - monitoring      
   validations:
     - expression: >-
         object.spec.containers.all(c,
