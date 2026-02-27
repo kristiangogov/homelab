@@ -29,8 +29,8 @@ ssh_keys = [
   "YOUR_SSH_KEY" 
 ]
 # Variables
-node_count    = 2
-vm_memory     = "2048"
+node_count    = 3
+vm_memory     = "4096"
 vm_vcpu       = 2
 user_name     = "server"
 hostname_base = "k3s-node"
@@ -46,7 +46,8 @@ make provision         # Bootstraps K3s & FluxCD
 
 ## Architecture
 
-![Full diagram](resources/full.png)
+>[!NOTE]
+>In-progress.
 
 ## Repo Structure
 ```
@@ -56,6 +57,8 @@ make provision         # Bootstraps K3s & FluxCD
 │   └── staging/
 ├── infrastructure/          # Cluster-wide setup
 │   ├── base/                # Base Configuraiton
+│       ├── kyverno/
+│       ├── kyverno-policies/
 │       ├── namespaces/
 │       └── networking/
 │   ├── production/          # Production specific overlays
@@ -68,7 +71,7 @@ make provision         # Bootstraps K3s & FluxCD
 │      ├── node-exporter/
 │      └── alertmanager/
 │   ├── production/
-│   └── staging/             # Staging specific overlays
+│   └── staging/             
 ├── provisioning/            # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
@@ -103,7 +106,8 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Ansible](https://cdn.simpleicons.org/ansible/f00?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
 | ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
 | ![Cilium](https://cdn.simpleicons.org/cilium/size=32) | Cilium | Solution for providing, securing, and observing network connectivity |
-| ![NGINX](https://cdn.simpleicons.org/nginx/size=32) | NGINX | Used as reverse proxy at the host level |
+| ![NGINX](https://cdn.simpleicons.org/nginx/size=32) | NGINX | Reverse proxy for external traffic |
+| <img src="https://raw.githubusercontent.com/kyverno/artwork/5be18d691ae2b42beb898ffc1312024975749bd8/Kyverno.svg" width="32" height="32" /> | Kyverno | Unified Policy as Code solution |
 
 ### Monitoring
 | Logo | Name | Description |
@@ -125,8 +129,8 @@ make provision         # Bootstraps K3s & FluxCD
 - Optimizations and reproducibility enhancement
 - Networking fine-tuning
 - Setup and Makefile refinement
-- Implement Kyverno
+- Refine Kyverno Policies
+- Implement NFS storage
 
 ## Goal
-
 Learn **Kubernetes** by breaking things in a controlled environment. Some services are pretty useful too!
