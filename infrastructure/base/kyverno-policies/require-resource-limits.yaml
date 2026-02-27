@@ -15,10 +15,6 @@ spec:
         apiVersions: [v1]
         operations: [CREATE, UPDATE]
         resources: [pods]
-        namespaces:
-          - homepage
-          - jellyfin
-          - monitoring      
   validations:
     - expression: >-
         object.spec.containers.all(c,
