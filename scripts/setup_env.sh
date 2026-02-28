@@ -6,16 +6,17 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     exit 1
 fi
 
-echo "Setting up Environment..."
+echo "> Setting up Environment..."
 
 # SSH Agent
 if [ -z "$SSH_AUTH_SOCK" ]; then
-    echo "Starting SSH Agent..."
+    echo "> Starting SSH Agent..."
     eval $(ssh-agent -s)
 fi
 
 if ! ssh-add -l | grep -q "id_ed25519"; then
-    echo "Adding SSH Key..."
+    echo "> Adding SSH Key..."
+    echo "--------------------"
     ssh-add ~/.ssh/id_ed25519
 fi
 
@@ -33,7 +34,8 @@ pkill -f "L 6443" 2>/dev/null
 sleep 1
 
 if ! ss -tlnp | grep -q ':6443'; then
-    echo "Opening k3s tunnel via thinkpad → ${K3S_IP}..."
+    echo "--------------------"
+    echo "> Opening k3s tunnel via thinkpad → ${K3S_IP}..."
     ssh -f -N -L 6443:${K3S_IP}:6443 thinkpad
 fi
 
@@ -44,8 +46,11 @@ sed "s|https://${K3S_IP}:6443|https://127.0.0.1:6443|g" "$KUBECONFIG_FILE" \
     > "$TUNNEL_KUBECONFIG"
 export KUBECONFIG="$TUNNEL_KUBECONFIG"
 
+echo "--------------------"
 echo "REPO_ROOT:      $REPO_ROOT"
 echo "KUBECONFIG:     $KUBECONFIG"
 echo "ANSIBLE_CONFIG: $ANSIBLE_CONFIG"
 echo "K3S_IP:         $K3S_IP"
-echo "Environment Ready!"
+echo "--------------------"
+echo "> Environment Ready!"
+echo "--------------------"
