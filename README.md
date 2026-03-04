@@ -21,7 +21,8 @@ To reproduce this entire environment on a fresh Fedora host:
 1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added. Ensure virtualization is enabled at BIOS level.
 2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
 (preferably via Ansible Vault secret as currently implemented)
-3. **Terraform Variables**: Provide the following file in provisioning/terraform/terraform.tfvars:
+3. **Terraform Variables**: Provide the following files in provisioning/terraform/  
+**terraform.tfvars**:
 ```sh
 # Secrets
 server_password = "YOUR_VM_PASSWORD"
@@ -35,10 +36,18 @@ vm_vcpu       = 2
 user_name     = "server"
 hostname_base = "k3s-node"
 ```
+**staging.tfvars** / **prod.tfvars**:
+```sh
+env        = "staging" # or "prod"
+host_ip    = "192.168.X.XXX" # the target_env IP
+```
+
 4. **Execute Pipeline:**
 ```bash
 cd scripts/
 source ./setup_env.sh  # Sets up your shell environment
+# Add ENV=prod or leave blank for prod
+# Add ENV=staging for staging:
 make provision-host    # Configures KVM/libvirt & Tailscale
 make apply             # Provisions VMs via Terraform
 make provision         # Bootstraps K3s & FluxCD
@@ -71,7 +80,11 @@ make provision         # Bootstraps K3s & FluxCD
 │      ├── node-exporter/
 │      └── alertmanager/
 │   ├── production/
-│   └── staging/             
+│   └── staging/       
+├── policies/                # Kyverno policies
+│   ├── base/
+│   ├── production/
+│   └── staging/        
 ├── provisioning/            # IaC and Configuration
 │   ├── terraform/          
 │   └── ansible/        
