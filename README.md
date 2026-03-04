@@ -21,9 +21,10 @@ To reproduce this entire environment on a fresh Fedora host:
 1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added. Ensure virtualization is enabled at BIOS level.
 2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
 (preferably via Ansible Vault secret as currently implemented)
-3. **Terraform Variables**: Provide the following files in provisioning/terraform/  
+3. **Terraform Variables**: Provide the following files in   
+**provisioning/terraform/prod** AND **provisioning/terraform/staging**:
 
-**prod/terraform.tfvars and prod/terraform.tfvars**:
+**terraform.tfvars**
 ```sh
 # Secrets
 server_password = "YOUR_VM_PASSWORD"
@@ -116,6 +117,7 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad T14 Gen 1 | Production |
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging |
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Legion 5 Slim | Workstation |
+| ![Lenovo](https://cdn.simpleicons.org/hp?size=32) | HP EliteDesk 800 G2 SFF | NAS (Coming soon) |
 
 ### Infrastructure
 | Logo | Name | Description |
@@ -148,7 +150,7 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- Add NAS (another machine incoming 🫣)
+- Setup the NAS machine
 - Optimizations and reproducibility enhancement
 - Networking fine-tuning
 - Setup and Makefile refinement
