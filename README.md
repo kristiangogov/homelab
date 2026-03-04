@@ -22,6 +22,7 @@ To reproduce this entire environment on a fresh Fedora host:
 2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
 (preferably via Ansible Vault secret as currently implemented)
 3. **Terraform Variables**: Provide the following files in provisioning/terraform/  
+
 **terraform.tfvars**:
 ```sh
 # Secrets

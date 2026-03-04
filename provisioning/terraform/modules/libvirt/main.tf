@@ -93,7 +93,7 @@ output "vm_ips" {
 }
 
 resource "local_file" "ansible_inventory" {
-  filename = "${path.module}/../ansible/inventory/inventory.${var.env}.ini"
+  filename = "${path.module}/../../../ansible/inventory/inventory.${var.env}.ini"
   content  = <<EOT
 [target_env]
 ${var.host_ip} ansible_user=server
