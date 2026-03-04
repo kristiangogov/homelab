@@ -23,7 +23,7 @@ To reproduce this entire environment on a fresh Fedora host:
 (preferably via Ansible Vault secret as currently implemented)
 3. **Terraform Variables**: Provide the following files in provisioning/terraform/  
 
-**terraform.tfvars**:
+**prod/terraform.tfvars and prod/terraform.tfvars**:
 ```sh
 # Secrets
 server_password = "YOUR_VM_PASSWORD"
@@ -31,24 +31,26 @@ ssh_keys = [
   "YOUR_SSH_KEY" 
 ]
 # Variables
-node_count    = 3
-vm_memory     = "4096"
-vm_vcpu       = 2
-user_name     = "server"
-hostname_base = "k3s-node"
-```
-**staging.tfvars** / **prod.tfvars**:
-```sh
-env        = "staging" # or "prod"
-host_ip    = "192.168.X.XXX" # the target_env IP
+node_count    = 3                # Number of VMs
+vm_memory     = "4096"           # VM RAM
+vm_vcpu       = 2                # VM CPU
+user_name     = "server"         # VM User (don't change)
+hostname_base = "k3s-node"       # VM base hostname
+env           = "prod"           # or "staging" respectively
+host_ip       = "192.168.X.XXX"  # Host IP
 ```
 
 4. **Execute Pipeline:**
 ```bash
 cd scripts/
 source ./setup_env.sh  # Sets up your shell environment
+
 # Add ENV=prod or leave blank for prod
-# Add ENV=staging for staging:
+# Add ENV=staging for staging
+
+# make provision-host           = prod
+# make provision-host ENV=stage = staging
+
 make provision-host    # Configures KVM/libvirt & Tailscale
 make apply             # Provisions VMs via Terraform
 make provision         # Bootstraps K3s & FluxCD
@@ -87,8 +89,14 @@ make provision         # Bootstraps K3s & FluxCD
 │   ├── production/
 │   └── staging/        
 ├── provisioning/            # IaC and Configuration
-│   ├── terraform/          
-│   └── ansible/        
+│   ├── terraform/  
+│      ├── modules/
+│      ├── prod/
+│      └── staging/        
+│   └── ansible/    
+│      ├── inventory/
+│      ├── playbook/
+│      └── roles/      
 ├── resources/               # README resources
 ├── scripts/                 # Makefile and environment setup
 ├── services/                # Services
@@ -140,6 +148,7 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
+- Add NAS (another machine incoming 🫣)
 - Optimizations and reproducibility enhancement
 - Networking fine-tuning
 - Setup and Makefile refinement
