@@ -21,7 +21,7 @@ To reproduce this entire environment on a fresh Fedora host:
 1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added. Ensure virtualization is enabled at BIOS level.
 2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
 (preferably via Ansible Vault secret as currently implemented)
-3. **Terraform Variables**: Provide the following files in   
+3. **Terraform Variables**: Provide the following file in   
 **provisioning/terraform/prod** AND **provisioning/terraform/staging**:
 
 **terraform.tfvars**
@@ -71,7 +71,6 @@ make provision         # Bootstraps K3s & FluxCD
 ├── infrastructure/          # Cluster-wide setup
 │   ├── base/                # Base Configuraiton
 │       ├── kyverno/
-│       ├── kyverno-policies/
 │       ├── namespaces/
 │       └── networking/
 │   ├── production/          # Production specific overlays
