@@ -1,7 +1,18 @@
-.PHONY: help ping plan apply destroy get-ips rebuild auto-rebuild provision provision-host check-route
+ENV ?= prod
 
-ANSIBLE_DIR := $(abspath $(CURDIR)/../provisioning/ansible)
+ifeq ($(ENV), staging)
+  HOST_IP     := 192.168.0.109
+  TF_VAR_FILE := staging.tfvars
+else
+  HOST_IP     := 192.168.0.111
+  TF_VAR_FILE := prod.tfvars
+endif
+
+ANSIBLE_DIR   := $(abspath $(CURDIR)/../provisioning/ansible)
 TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform)
+INVENTORY := inventory/inventory.$(ENV).ini
+
+.PHONY: help ping plan apply destroy get-ips rebuild auto-rebuild provision provision-host
 
 help:
 	@echo "Available commands:"
@@ -11,18 +22,20 @@ help:
 	@echo "  destroy    - Run `terraform destroy`"
 	@echo "  rebuild    - Rebuild the VM fleet and ping"
 	@echo "  provision  - Run the Ansible playbooks"
+	@echo "	 Usage: make <target> [ENV=staging|prod]"
+	@echo "  ENV defaults to prod ($(HOST_IP))"
 
 ping:
-	cd $(ANSIBLE_DIR) && ansible everything -i inventory/inventory.ini -m ping
+	cd $(ANSIBLE_DIR) && ansible everything -i $(INVENTORY) -m ping
 
 plan:
-	cd $(TERRAFORM_DIR) && terraform plan
+	cd $(TERRAFORM_DIR) && terraform plan -var-file=$(TF_VAR_FILE)
 
 apply:
-	cd $(TERRAFORM_DIR) && terraform apply
+	cd $(TERRAFORM_DIR) && terraform apply -var-file=$(TF_VAR_FILE)
 
 destroy:
-	cd $(TERRAFORM_DIR) && terraform destroy	
+	cd $(TERRAFORM_DIR) && terraform destroy -var-file=$(TF_VAR_FILE)
 
 get-ips:
 	cd $(TERRAFORM_DIR) && terraform output vm_ips
@@ -30,23 +43,16 @@ get-ips:
 rebuild: destroy apply
 	@echo "Waiting 15 seconds for VMs to boot..."
 	@sleep 15
-	$(MAKE) ping
+	$(MAKE) ping ENV=$(ENV)
 
 auto-rebuild:
-	cd $(TERRAFORM_DIR) && terraform destroy -auto-approve
-	cd $(TERRAFORM_DIR) && terraform apply -auto-approve
-	$(MAKE) provision
-	$(MAKE) get-ips
+	cd $(TERRAFORM_DIR) && terraform destroy -auto-approve -var-file=$(TF_VAR_FILE)
+	cd $(TERRAFORM_DIR) && terraform apply  -auto-approve -var-file=$(TF_VAR_FILE)
+	$(MAKE) provision ENV=$(ENV)
+	$(MAKE) get-ips   ENV=$(ENV)
 
 provision:
-	@echo "Running Ansible Playbooks..."
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/vms.yaml --ask-become-pass
+	cd $(ANSIBLE_DIR) && ansible-playbook -i $(INVENTORY) playbooks/vms.yaml --ask-become-pass
 
 provision-host:
-	@echo "Running Ansible Playbooks..."
-	@cd $(ANSIBLE_DIR) && ansible-playbook -i inventory/inventory.ini playbooks/host.yaml --ask-become-pass
-
-check-route:
-	@ip route get 192.168.122.0/24 > /dev/null 2>&1 || \
-	(echo "Route missing! Run: sudo ip route add 192.168.122.0/24 via 192.168.0.109" && exit 1)
-	@echo "Route to VMs is active."
+	cd $(ANSIBLE_DIR) && ansible-playbook -i $(INVENTORY) playbooks/host.yaml --ask-become-pass
