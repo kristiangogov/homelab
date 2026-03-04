@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "libvirt" {
-  uri = "qemu+ssh://server@thinkpad/system"
+  uri = "qemu+ssh://server@${var.host_ip}/system"
 }
 
 resource "libvirt_volume" "fedora_base" {
@@ -93,14 +93,10 @@ output "vm_ips" {
 }
 
 resource "local_file" "ansible_inventory" {
-  filename = "${path.module}/../ansible/inventory/inventory.ini"
+  filename = "${path.module}/../ansible/inventory/inventory.${var.env}.ini"
   content  = <<EOT
-[fedora]
+[target_env]
 ${var.host_ip} ansible_user=server
-
-[physical]
-yoga ansible_host=yoga ansible_user=server
-thinkpad ansible_host=thinkpad ansible_user=server
 
 [k3s_server]
 ${libvirt_domain.k3s_node[0].name} ansible_host=${libvirt_domain.k3s_node[0].network_interface[0].addresses[0]} ansible_user=server
@@ -115,7 +111,7 @@ k3s_server
 k3s_agents
 
 [everything:children]
-physical
+target_env
 vms
 EOT
 }

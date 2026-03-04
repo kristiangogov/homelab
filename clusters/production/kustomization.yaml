@@ -4,3 +4,4 @@ resources:
   - infrastructure.yaml
   - monitoring.yaml
   - services.yaml
+  - policies.yaml

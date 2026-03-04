@@ -22,7 +22,7 @@
     - flux
 
 - name: Setup Host Nginx
-  hosts: fedora
+  hosts: target_env
   become: true
   roles:
     - configure-nginx-ips

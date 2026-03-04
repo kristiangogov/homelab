@@ -3,6 +3,8 @@
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
+prod.tfvars
+staging.tfvars
 
 
 # Others

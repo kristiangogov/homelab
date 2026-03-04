@@ -37,5 +37,9 @@ variable "server_password" {
 
 variable "host_ip" {
   type        = string
-  default     = "192.168.0.111"
+}
+
+variable "env" {
+  description = "Environment name (prod, staging)"
+  type        = string
 }

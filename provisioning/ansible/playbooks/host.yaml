@@ -1,5 +1,5 @@
 - name: Fedora 43 KDE Server Setup
-  hosts: fedora
+  hosts: target_env
   become: true
 
   vars_prompt:
@@ -14,4 +14,4 @@
     - virtualization
     - tailscale
     - nginx
-    - flush-nft # Temp solution, final firewall config is needed
+    # - flush-nft # Temp solution, final firewall config is needed
