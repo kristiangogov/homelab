@@ -113,5 +113,8 @@ k3s_agents
 [everything:children]
 target_env
 vms
+
+[all:vars]
+kubeconfig_env=${var.env}
 EOT
 }

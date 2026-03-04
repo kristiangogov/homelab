@@ -6,6 +6,16 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     exit 1
 fi
 
+ENV="${ENV:-prod}"
+
+if [[ "$ENV" == "staging" ]]; then
+  HOST_IP="192.168.0.109"
+else
+  HOST_IP="192.168.0.111"
+fi
+
+echo "ENV=$ENV"
+
 echo "> Setting up Environment..."
 
 # SSH Agent
@@ -22,7 +32,7 @@ fi
 
 # Absolute paths
 REPO_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
-KUBECONFIG_FILE="$REPO_ROOT/k3s-homelab.yaml"
+KUBECONFIG_FILE="$REPO_ROOT/${ENV}_kubeconfig.yaml"
 
 export ANSIBLE_CONFIG="$REPO_ROOT/ansible/ansible.cfg"
 export ANSIBLE_INVENTORY="$REPO_ROOT/ansible/inventory/inventory.ini"

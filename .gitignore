@@ -9,5 +9,7 @@ staging.tfvars
 
 # Others
 .vault_pass
+prod_kubeconfig.yaml
+staging_kubeconfig.yaml
 k3s-homelab.yaml
 test

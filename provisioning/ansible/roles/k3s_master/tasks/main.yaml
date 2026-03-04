@@ -22,14 +22,14 @@
 - name: Fetch Kubeconfig to Legion
   ansible.builtin.fetch:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: ../../../k3s-homelab.yaml
+    dest: "../../../{{ kubeconfig_env }}_kubeconfig.yaml"
     flat: yes
 
 - name: Update Server IP in local Kubeconfig
   delegate_to: localhost
   become: false
   ansible.builtin.replace:
-    path: ../../../k3s-homelab.yaml
+    path: ../../../{{ kubeconfig_env }}_kubeconfig.yaml
     regexp: '127.0.0.1'
     replace: "{{ hostvars['k3s-node-0']['ansible_host'] }}"
 
