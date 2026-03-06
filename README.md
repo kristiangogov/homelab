@@ -1,6 +1,6 @@
 # Homelab
 
-K3s cluster running self-hosted services with a focus on **Total Reproducibility** and **Environment Isolation**.
+K3s cluster running self-hosted services with a focus on **Total Reproducibility**.
 
 > [!NOTE] 
 > You can find detailed write-ups on my blog:  
@@ -115,13 +115,14 @@ make provision         # Bootstraps K3s & FluxCD
 |:-:|-----|-------------|
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad T14 Gen 1 | Production |
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging |
+| ![HP](https://cdn.simpleicons.org/hp?size=32) | HP EliteDesk 800 G2 SFF 2x1TB WD Red | NAS |
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Legion 5 Slim | Workstation |
-| ![Lenovo](https://cdn.simpleicons.org/hp?size=32) | HP EliteDesk 800 G2 SFF | NAS (Coming soon) |
 
 ### Infrastructure
 | Logo | Name | Description |
 |:-:|-----|-------------|
 | ![Fedora](https://cdn.simpleicons.org/fedora?size=32) | Fedora 43 | Linux Distribution used on Host, VMs and Workstation |
+| ![TrueNAS](https://cdn.simpleicons.org/truenas?size=32) | TrueNAS | Open-source unified storage operating system based on OpenZFS |
 | ![QEMU](https://cdn.simpleicons.org/qemu?size=32) | QEMU/KVM | Hypervisor for running virtual machines |
 | ![K3s](https://cdn.simpleicons.org/k3s?size=32) | K3s | Lightweight Kubernetes engine |
 | ![FluxCD](https://cdn.simpleicons.org/flux?size=32) | FluxCD | GitOps tool for managing Kubernetes declaratively |
