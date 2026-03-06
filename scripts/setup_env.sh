@@ -10,8 +10,10 @@ ENV="${ENV:-prod}"
 
 if [[ "$ENV" == "staging" ]]; then
   HOST_IP="192.168.0.109"
+  HOST_NAME="yoga"
 else
   HOST_IP="192.168.0.111"
+  HOST_NAME="thinkpad"
 fi
 
 echo "ENV=$ENV"
@@ -45,8 +47,8 @@ sleep 1
 
 if ! ss -tlnp | grep -q ':6443'; then
     echo "--------------------"
-    echo "> Opening k3s tunnel via thinkpad → ${K3S_IP}..."
-    ssh -f -N -L 6443:${K3S_IP}:6443 thinkpad
+    echo "> Opening k3s tunnel via ${HOST_IP} → ${K3S_IP}..."
+    ssh -f -N -L 6443:${K3S_IP}:6443 ${HOST_NAME}
 fi
 
 

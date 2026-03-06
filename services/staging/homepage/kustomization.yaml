@@ -14,16 +14,16 @@ patches:
         services.yaml: |
           - Monitoring:
               - Grafana:
-                  href: http://192.168.0.109:30030
+                  href: http://192.168.0.109:3000
                   icon: grafana.png
               - Prometheus:
-                  href: http://192.168.0.109:30090
+                  href: http://192.168.0.109:3090
                   icon: prometheus.png
               - Alertmanager:
-                  href: http://192.168.0.109:30093
+                  href: http://192.168.0.109:3093
                   icon: alertmanager.png
 
           - Media:
               - Jellyfin:
-                  href: http://192.168.0.109:30096
+                  href: http://192.168.0.109:3096
                   icon: jellyfin.png

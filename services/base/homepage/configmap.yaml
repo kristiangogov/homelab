@@ -23,18 +23,18 @@ data:
   services.yaml: |
     - Monitoring:
         - Grafana:
-            href: http://192.168.0.111:30030
+            href: http://192.168.0.111:3000
             icon: grafana.png
         - Prometheus:
-            href: http://192.168.0.111:30090
+            href: http://192.168.0.111:3090
             icon: prometheus.png
         - Alertmanager:
-            href: http://192.168.0.111:30093
+            href: http://192.168.0.111:3093
             icon: alertmanager.png
 
     - Media:
         - Jellyfin:
-            href: http://192.168.0.111:30096
+            href: http://192.168.0.111:3096
             icon: jellyfin.png
 
 
