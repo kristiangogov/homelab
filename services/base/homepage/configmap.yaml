@@ -20,27 +20,21 @@ data:
         - Google:
             - abbr: G
               href: https://google.com/
-        - DuckDuckGo:
-            - abbr: D
-              href: https://duckduckgo.com
-        - Abv:
-            - abbr: A
-              href: https://abv.bg
   services.yaml: |
     - Monitoring:
         - Grafana:
-            href: http://192.168.0.104:30030
+            href: http://192.168.0.111:30030
             icon: grafana.png
         - Prometheus:
-            href: http://192.168.0.104:30090
+            href: http://192.168.0.111:30090
             icon: prometheus.png
         - Alertmanager:
-            href: http://192.168.0.104:30093
+            href: http://192.168.0.111:30093
             icon: alertmanager.png
 
     - Media:
         - Jellyfin:
-            href: http://192.168.0.104:30096
+            href: http://192.168.0.111:30096
             icon: jellyfin.png
 
 
