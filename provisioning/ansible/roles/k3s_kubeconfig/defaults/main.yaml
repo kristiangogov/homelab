@@ -1,0 +1,3 @@
+kubeconfig_src: /etc/rancher/k3s/k3s.yaml
+kubeconfig_dest: "{{ ansible_env.HOME }}/.kube/config"
+persist_kubeconfig_env: true

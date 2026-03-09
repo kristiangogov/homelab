@@ -9,9 +9,10 @@
     private: false
 
   roles:
-    - hostname # Only run once
+    # - hostname # Only run once
     - update
     - virtualization
     - tailscale
     - nginx
+    # - bridge # bridge test
     # - flush-nft # Temp solution, final firewall config is needed

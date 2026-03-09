@@ -1,0 +1,57 @@
+- name: Create bridge interface
+  ansible.builtin.copy:
+    dest: /etc/systemd/network/br0.netdev
+    content: |
+      [NetDev]
+      Name=br0
+      Kind=bridge
+  become: true
+
+- name: Bind physical interface to bridge
+  ansible.builtin.copy:
+    dest: /etc/systemd/network/br0-bind.network
+    content: |
+      [Match]
+      Name=enp0s25  # replace with your actual interface name
+
+      [Network]
+      Bridge=br0
+  become: true
+
+- name: Configure bridge network
+  ansible.builtin.copy:
+    dest: /etc/systemd/network/br0.network
+    content: |
+      [Match]
+      Name=br0
+
+      [Network]
+      DHCP=yes
+  become: true
+
+- name: Enable systemd-networkd
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    enabled: true
+    state: started
+  become: true
+
+- name: Bind physical interface to br0
+  ansible.builtin.command:
+    cmd: nmcli connection add type bridge-slave ifname enp0s31f6 master br0
+  become: true
+
+- name: Bring up bridge slave
+  ansible.builtin.command:
+    cmd: nmcli connection up bridge-slave-enp0s31f6
+  become: true
+
+- name: Configure br0 for DHCP
+  ansible.builtin.command:
+    cmd: nmcli connection modify br0 ipv4.method auto
+  become: true
+
+- name: Bring up br0
+  ansible.builtin.command:
+    cmd: nmcli connection up br0
+  become: true

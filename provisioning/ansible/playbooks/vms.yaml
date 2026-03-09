@@ -9,6 +9,7 @@
   become: true
   roles:
     - k3s_master
+    - k3s_kubeconfig
 
 - name: Join K3s Workers
   hosts: k3s_agents

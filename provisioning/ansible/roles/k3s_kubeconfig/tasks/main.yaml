@@ -1,0 +1,22 @@
+- name: Ensure .kube directory exists
+  file:
+    path: "{{ ansible_env.HOME }}/.kube"
+    state: directory
+    mode: "0700"
+
+- name: Copy k3s kubeconfig
+  become: true
+  copy:
+    src: "{{ kubeconfig_src }}"
+    dest: "{{ kubeconfig_dest }}"
+    remote_src: true
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_gid }}"
+    mode: "0600"
+
+- name: Persist KUBECONFIG environment variable
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export KUBECONFIG=$HOME/.kube/config'
+    state: present
+  when: persist_kubeconfig_env
