@@ -1,0 +1,14 @@
+- name: Install nfs-utils
+  ansible.builtin.dnf:
+    name: nfs-utils
+    state: present
+  become: true
+
+- name: Enable and start nfs-client services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  become: true
+  loop:
+    - rpcbind

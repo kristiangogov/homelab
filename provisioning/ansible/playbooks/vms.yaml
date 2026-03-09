@@ -2,6 +2,7 @@
   hosts: vms
   roles:
     - common
+    - nfs
 
 - name: Setup K3s Master
   hosts: k3s_server
