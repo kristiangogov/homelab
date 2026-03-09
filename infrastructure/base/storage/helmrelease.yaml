@@ -20,3 +20,10 @@ spec:
     storageClass:
       create: false
     replicaCount: 1
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
