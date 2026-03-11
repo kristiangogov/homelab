@@ -12,24 +12,37 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 > [The Complete Pipeline - End-to-end IaC GitOps](https://gogov.dev/blog/end-to-end-iac-gitops)  
 > [Implementing SOPS - GitOps secrets management](https://gogov.dev/blog/sops-secret-management)  
 > [Networking Overhaul & Production Migration](https://gogov.dev/blog/homelab-networking-overhaul)  
+> (WIP) [Kyverno implementation]()  
+> (WIP) [NAS Introduction and more networking issues]()  
 
 ## Quick Start 🚀
 
 To reproduce this entire environment on a fresh Fedora host:
 
 ### Prerequisites:
-1. **Prepare Fedora 43 Host:** Ensure SSH is active and your key is added. Ensure virtualization is enabled at BIOS level.
-2. **GitHub PAT**: Provide your GitHub PAT in: provisioning/ansible/roles/flux/tasks/main.yaml 
+> [!IMPORTANT]
+> The following is expected:
+> Production permanent IP: **192.168.0.111**
+> Staging permanent IP: **192.168.0.109** (optional, if setting up dual environments)
+> NAS permanent IP: **192.168.0.104** (can be replicated without external provisioner, but requires tweaking)
+> If your setup differs in any way, you should adjust those values in all relevant places - deployments, persistent volume claims, setup_env script etc.
+1. **Prepare Fedora 43 Host:** 
+    - Install a fresh Fedora 43 (KDE tested)
+    - Connected via Ethernet (required of bridge)
+    - Ensure SSH is active and your key is added
+    - Ensure virtualization is enabled at BIOS level
+2. **GitHub PAT**: 
+    - Provide your GitHub PAT in: **provisioning/ansible/roles/flux/tasks/main.yaml** 
 (preferably via Ansible Vault secret as currently implemented)
-3. **Terraform Variables**: Provide the following file in   
+3. **Terraform Variables**: 
+    - Provide/create **terraform.tfvars** in   
 **provisioning/terraform/prod** AND **provisioning/terraform/staging**:
 
-**terraform.tfvars**
 ```sh
 # Secrets
 server_password = "YOUR_VM_PASSWORD"
 ssh_keys = [
-  "YOUR_SSH_KEY" 
+  "YOUR_PUBLIC_SSH_KEY(S)" 
 ]
 # Variables
 node_count    = 3                # Number of VMs
@@ -38,7 +51,7 @@ vm_vcpu       = 2                # VM CPU
 user_name     = "server"         # VM User (don't change)
 hostname_base = "k3s-node"       # VM base hostname
 env           = "prod"           # or "staging" respectively
-host_ip       = "192.168.X.XXX"  # Host IP
+host_ip       = "192.168.X.XXX"  # Host IP; 192.168.0.111 / 192.168.0.109
 ```
 
 4. **Execute Pipeline:**
@@ -69,10 +82,11 @@ make provision         # Bootstraps K3s & FluxCD
 │   ├── production/
 │   └── staging/
 ├── infrastructure/          # Cluster-wide setup
-│   ├── base/                # Base Configuraiton
+│   ├── base/                # Base Configuration
 │       ├── kyverno/
 │       ├── namespaces/
-│       └── networking/
+│       ├── networking/
+│       └── storage/
 │   ├── production/          # Production specific overlays
 │   └── staging/             # Staging specific overlays
 ├── monitoring/              # Monitoring stack
@@ -150,12 +164,9 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- Setup the NAS machine
-- Optimizations and reproducibility enhancement
 - Networking fine-tuning
-- Setup and Makefile refinement
 - Refine Kyverno Policies
-- Implement NFS storage
+- Move Makefile to root... maybe.
 
 ## Goal
 Learn **Kubernetes** by breaking things in a controlled environment. Some services are pretty useful too!
