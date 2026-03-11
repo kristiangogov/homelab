@@ -2,34 +2,29 @@ ENV ?= prod
 
 ifeq ($(ENV), staging)
   HOST_IP  := 192.168.0.109
-#   SSH_ARGS := -o ProxyCommand="ssh -W %h:%p -q server@yoga"
 else
   HOST_IP  := 192.168.0.111
-#   SSH_ARGS := -o ProxyCommand="ssh -W %h:%p -q server@thinkpad"
 endif
 
 ANSIBLE_DIR   := $(abspath $(CURDIR)/../provisioning/ansible)
 TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform/$(ENV))
 INVENTORY     := inventory/inventory.$(ENV).ini
-ANSIBLE_OPTS  := -i $(INVENTORY) --ssh-extra-args='$(SSH_ARGS)'
+ANSIBLE_OPTS  := -i $(INVENTORY)
 
-.PHONY: help health-check ping init plan apply destroy get-ips rebuild auto-rebuild provision provision-host
+.PHONY: help ping init plan apply destroy get-ips rebuild auto-rebuild provision provision-host
 
 help:
 	@echo "Available commands:"
 	@echo "  ping       - Test connectivity to all hosts"
-	@echo "  init       - Run `terraform init`"
-	@echo "  plan       - Run `terraform plan`"
-	@echo "  apply      - Run `terraform apply`"
-	@echo "  destroy    - Run `terraform destroy`"
+	@echo "  init       - Run terraform init"
+	@echo "  plan       - Run terraform plan"
+	@echo "  apply      - Run terraform apply"
+	@echo "  destroy    - Run terraform destroy"
 	@echo "  rebuild    - Rebuild the VM fleet and ping"
 	@echo "  provision  - Run the Ansible playbooks"
-	@echo "	 Usage: make <target> [ENV=staging|prod]"
+	@echo ""
+	@echo "  Usage: make <target> [ENV=staging|prod]"
 	@echo "  ENV defaults to prod ($(HOST_IP))"
-
-health-check:
-	$(MAKE) ping ENV=staging
-	$(MAKE) ping ENV=prod
 
 ping:
 	cd $(ANSIBLE_DIR) && ansible everything $(ANSIBLE_OPTS) -m ping
@@ -56,6 +51,9 @@ rebuild: destroy apply
 
 auto-rebuild:
 	cd $(TERRAFORM_DIR) && terraform destroy -auto-approve
+	cd $(TERRAFORM_DIR) && terraform apply  -auto-approve
+# 	Sleep and re-apply needed to give time for qemu-agent ot populate VM IPs
+	@sleep 15
 	cd $(TERRAFORM_DIR) && terraform apply  -auto-approve
 	$(MAKE) provision ENV=$(ENV)
 	$(MAKE) get-ips   ENV=$(ENV)

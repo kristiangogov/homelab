@@ -14,5 +14,4 @@
     - virtualization
     - tailscale
     - nginx
-    # - bridge # bridge test
-    # - flush-nft # Temp solution, final firewall config is needed
+    - bridge
