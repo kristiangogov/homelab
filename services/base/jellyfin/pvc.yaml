@@ -10,7 +10,6 @@ spec:
   resources:
     requests:
       storage: 10Gi
----
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -19,7 +18,8 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: nfs-media
+  storageClassName: ""
+  volumeName: jellyfin-media-pv
   resources:
     requests:
-      storage: 250Gi
+      storage: 500Gi
