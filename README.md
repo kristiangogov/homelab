@@ -1,6 +1,6 @@
 # Homelab
 
-K3s cluster running self-hosted services with a focus on **Total Reproducibility**.
+K3s cluster running self-hosted services.
 
 > [!NOTE] 
 > You can find detailed write-ups on my blog:  
@@ -17,14 +17,12 @@ K3s cluster running self-hosted services with a focus on **Total Reproducibility
 
 ## Quick Start 🚀
 
-To reproduce this entire environment on a fresh Fedora host:
-
 ### Prerequisites:
 > [!IMPORTANT]
 > The following is expected:  
-> Production permanent IP: **192.168.0.111**  
-> Staging permanent IP: **192.168.0.109** (optional, if setting up dual environments)  
-> NAS permanent IP: **192.168.0.104** (can be replicated without external provisioner, but requires tweaking)  
+> **Production** host permanent IP: **192.168.0.111**  
+> **Staging** host permanent IP: **192.168.0.109** (optional, if setting up dual environments)  
+> **NAS** permanent IP: **192.168.0.104** (can be replicated without external provisioner, but requires tweaking)  
 > If your setup differs in any way, you should adjust those values in all relevant places - deployments, persistent volume claims, setup_env script etc.
 1. **Prepare Fedora 43 Host:** 
     - Install a fresh Fedora 43 (KDE tested)
@@ -165,8 +163,8 @@ make provision         # Bootstraps K3s & FluxCD
 
 ## Up next / To do list
 - More networking tuning
-- Refine Kyverno Policies
-- Move Makefile to root... maybe.
+- Refine Kyverno policies
+- Move Makefile to root... maybe
 
 ## Goal
-Learn **Kubernetes** by breaking things in a controlled environment. Some services are pretty useful too!
+Learn **Kubernetes** and its ecosystem by breaking things in a controlled environment.
