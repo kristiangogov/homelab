@@ -21,18 +21,18 @@ To reproduce this entire environment on a fresh Fedora host:
 
 ### Prerequisites:
 > [!IMPORTANT]
-> The following is expected:
-> Production permanent IP: **192.168.0.111**
-> Staging permanent IP: **192.168.0.109** (optional, if setting up dual environments)
-> NAS permanent IP: **192.168.0.104** (can be replicated without external provisioner, but requires tweaking)
+> The following is expected:  
+> Production permanent IP: **192.168.0.111**  
+> Staging permanent IP: **192.168.0.109** (optional, if setting up dual environments)  
+> NAS permanent IP: **192.168.0.104** (can be replicated without external provisioner, but requires tweaking)  
 > If your setup differs in any way, you should adjust those values in all relevant places - deployments, persistent volume claims, setup_env script etc.
 1. **Prepare Fedora 43 Host:** 
     - Install a fresh Fedora 43 (KDE tested)
-    - Connected via Ethernet (required of bridge)
+    - Connected via Ethernet (required for bridge)
     - Ensure SSH is active and your key is added
     - Ensure virtualization is enabled at BIOS level
 2. **GitHub PAT**: 
-    - Provide your GitHub PAT in: **provisioning/ansible/roles/flux/tasks/main.yaml** 
+    - Provide your GitHub PAT in: **provisioning/ansible/roles/flux/tasks/main.yaml**   
 (preferably via Ansible Vault secret as currently implemented)
 3. **Terraform Variables**: 
     - Provide/create **terraform.tfvars** in   
@@ -128,7 +128,7 @@ make provision         # Bootstraps K3s & FluxCD
 | Logo | Device | Role |
 |:-:|-----|-------------|
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad T14 Gen 1 | Production |
-| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging |
+| ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Thinkpad X1 Yoga | Staging (Deprecated, no Ethernet Port) |
 | ![HP](https://cdn.simpleicons.org/hp?size=32) | HP EliteDesk 800 G2 SFF 2x1TB WD Red | NAS |
 | ![Lenovo](https://cdn.simpleicons.org/lenovo?size=32) | Lenovo Legion 5 Slim | Workstation |
 
@@ -164,7 +164,7 @@ make provision         # Bootstraps K3s & FluxCD
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- Networking fine-tuning
+- More networking tuning
 - Refine Kyverno Policies
 - Move Makefile to root... maybe.
 
