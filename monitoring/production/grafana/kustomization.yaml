@@ -7,9 +7,27 @@ patches:
       kind: Deployment
       name: grafana
     patch: |
-      apiVersion: apps/v1
-      kind: Deployment
+      - op: remove
+        path: /spec/template/spec/initContainers
+      - op: replace
+        path: /spec/template/spec/volumes/0
+        value:
+          name: data
+          persistentVolumeClaim:
+            claimName: grafana-data
+  - target:
+      kind: PersistentVolumeClaim
+      name: grafana-data
+    patch: |
+      apiVersion: v1
+      kind: PersistentVolumeClaim
       metadata:
-        name: grafana
+        name: grafana-data
+        namespace: monitoring
       spec:
-        replicas: 1
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: nfs-config
+        resources:
+          requests:
+            storage: 2Gi
