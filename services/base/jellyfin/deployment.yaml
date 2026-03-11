@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: jellyfin
-          image: linuxserver/jellyfin:latest
+          image: linuxserver/jellyfin:10.11.6
           imagePullPolicy: Always
           resources:
             requests:
@@ -42,12 +42,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: movies
-              mountPath: /home/b1ur/Videos
+            - name: media
+              mountPath: /media
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: jellyfin-config
-        - name: movies
-          hostPath:
-            path: /home/b1ur/Videos
+        - name: media
+          persistentVolumeClaim:
+            claimName: jellyfin-media
