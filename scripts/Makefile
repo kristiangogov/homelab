@@ -2,10 +2,10 @@ ENV ?= prod
 
 ifeq ($(ENV), staging)
   HOST_IP  := 192.168.0.109
-  SSH_ARGS := -o ProxyCommand="ssh -W %h:%p -q server@yoga"
+#   SSH_ARGS := -o ProxyCommand="ssh -W %h:%p -q server@yoga"
 else
   HOST_IP  := 192.168.0.111
-  SSH_ARGS := -o ProxyCommand="ssh -W %h:%p -q server@thinkpad"
+#   SSH_ARGS := -o ProxyCommand="ssh -W %h:%p -q server@thinkpad"
 endif
 
 ANSIBLE_DIR   := $(abspath $(CURDIR)/../provisioning/ansible)

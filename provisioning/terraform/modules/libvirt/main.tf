@@ -41,7 +41,7 @@ data "cloudinit_config" "commoninit" {
     content = templatefile("${path.module}/cloud_init.cfg", {
       hostname        = "${var.hostname_base}-${count.index}"
       user_name       = var.user_name
-      ssh_keys        = jsonencode(var.ssh_keys) 
+      ssh_keys        = jsonencode(var.ssh_keys)
       server_password = var.server_password
     })
   }
@@ -55,17 +55,19 @@ resource "libvirt_cloudinit_disk" "commoninit" {
 }
 
 resource "libvirt_domain" "k3s_node" {
-  count  = var.node_count
-  name   = "k3s-node-${count.index}"
-  memory = var.vm_memory
-  vcpu   = var.vm_vcpu
-  type   = "kvm"
+  count     = var.node_count
+  name      = "k3s-node-${count.index}"
+  memory    = var.vm_memory
+  vcpu      = var.vm_vcpu
+  type      = "kvm"
   autostart = true
+
+  qemu_agent = true
 
   cloudinit = libvirt_cloudinit_disk.commoninit[count.index].id
 
   network_interface {
-    network_name   = "default"
+    bridge         = "br0"
     wait_for_lease = true
   }
 
@@ -88,22 +90,37 @@ resource "libvirt_domain" "k3s_node" {
 output "vm_ips" {
   value = {
     for vm in libvirt_domain.k3s_node :
-    vm.name => vm.network_interface[0].addresses[0]
+    vm.name => one([
+      for addr in vm.network_interface[0].addresses :
+      addr if can(regex("^192\\.168\\.", addr))
+    ])
+  }
+}
+
+locals {
+  vm_ips = {
+    for vm in libvirt_domain.k3s_node :
+    vm.name => (
+      length(vm.network_interface[0].addresses) > 0 ?
+      vm.network_interface[0].addresses[0] :
+      ""
+    )
   }
 }
 
 resource "local_file" "ansible_inventory" {
   filename = "${path.module}/../../../ansible/inventory/inventory.${var.env}.ini"
-  content  = <<EOT
+
+  content = <<EOT
 [target_env]
 ${var.host_ip} ansible_user=server
 
 [k3s_server]
-${libvirt_domain.k3s_node[0].name} ansible_host=${libvirt_domain.k3s_node[0].network_interface[0].addresses[0]} ansible_user=server
+k3s-node-0 ansible_host=${lookup(local.vm_ips, "k3s-node-0", "")} ansible_user=server
 
 [k3s_agents]
-%{ for i in range(1, length(libvirt_domain.k3s_node)) ~}
-${libvirt_domain.k3s_node[i].name} ansible_host=${libvirt_domain.k3s_node[i].network_interface[0].addresses[0]} ansible_user=server
+%{ for i in range(1, var.node_count) ~}
+k3s-node-${i} ansible_host=${lookup(local.vm_ips, "k3s-node-${i}", "")} ansible_user=server
 %{ endfor ~}
 
 [vms:children]
