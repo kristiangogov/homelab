@@ -12,8 +12,8 @@ K3s cluster running self-hosted services.
 > [The Complete Pipeline - End-to-end IaC GitOps](https://gogov.dev/blog/end-to-end-iac-gitops)  
 > [Implementing SOPS - GitOps secrets management](https://gogov.dev/blog/sops-secret-management)  
 > [Networking Overhaul & Production Migration](https://gogov.dev/blog/homelab-networking-overhaul)  
-> (WIP) [Kyverno implementation]()  
-> (WIP) [NAS Introduction and more networking issues]()  
+> [NAS Introduction and more networking issues](https://gogov.dev/blog/homelab-nas-introduction)  
+> (WIP) [Kyverno implementation and policies]()  
 
 ## Quick Start 🚀
 
