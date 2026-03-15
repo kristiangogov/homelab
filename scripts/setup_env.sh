@@ -9,14 +9,26 @@ fi
 ENV="${ENV:-prod}"
 
 if [[ "$ENV" == "staging" ]]; then
-  HOST_IP="192.168.0.109"
-  HOST_NAME="yoga"
+    HOST_IP="192.168.0.109"
+    HOST_NAME="yoga"
 else
-  HOST_IP="192.168.0.111"
-  HOST_NAME="thinkpad"
+    HOST_IP="192.168.0.111"
+    HOST_NAME="thinkpad"
 fi
+
 echo "------------------------------"
 echo "> Setting up Environment..."
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    echo "> Starting SSH Agent..."
+    eval $(ssh-agent -s)
+fi
+
+if ! ssh-add -l | grep -q "id_ed25519"; then
+    echo "> Adding SSH Key..."
+    echo "--------------------"
+    ssh-add ~/.ssh/id_ed25519
+fi
 
 # Absolute paths
 REPO_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"

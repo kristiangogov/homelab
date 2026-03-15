@@ -164,6 +164,9 @@ make provision         # Bootstraps K3s & FluxCD
 ## Up next / To do list
 - More networking tuning
 - Refine Kyverno policies
+- Setup truenas-exporter
+- Rename all 'prod' instances to 'production'
+- Extract FluxCD bootstrap env to variable
 - Move Makefile to root... maybe
 
 ## Goal
