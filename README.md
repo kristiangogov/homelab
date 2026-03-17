@@ -2,7 +2,7 @@
 
 K3s cluster running self-hosted services.
 
-> [!NOTE] 
+>[!NOTE]
 > You can find detailed write-ups on my blog:  
 > [K3s initial setup](https://gogov.dev/blog/homelab-initial-setup)  
 > [Adding Observability with Prometheus & Grafana](https://gogov.dev/blog/homelab-observability)  
@@ -54,8 +54,7 @@ host_ip       = "192.168.X.XXX"  # Host IP; 192.168.0.111 / 192.168.0.109
 
 4. **Execute Pipeline:**
 ```bash
-cd scripts/
-source ./setup_env.sh  # Sets up your shell environment
+source scripts/env.sh  # Sets up your shell environment
 
 # Add ENV=production or leave blank for production
 # Add ENV=staging for staging
@@ -109,14 +108,15 @@ make provision         # Bootstraps K3s & FluxCD
 │      ├── inventory/
 │      ├── playbook/
 │      └── roles/      
-├── resources/               # README resources
-├── scripts/                 # Makefile and environment setup
-├── services/                # Services
+├── resources/
+├── scripts/
+├── services/
 │   ├── base/
 │       ├── homepage/
 │       └── jellyfin/
 │   ├── production/
 │   └── staging/
+├── Makefile                 # Main orchestrator
     
 ```
 
@@ -166,7 +166,6 @@ make provision         # Bootstraps K3s & FluxCD
 - Refine Kyverno policies
 - Setup truenas-exporter
 - Extract FluxCD bootstrap env to variable
-- Move Makefile to root... maybe
 
 ## Goal
 Learn **Kubernetes** and its ecosystem by breaking things in a controlled environment.
