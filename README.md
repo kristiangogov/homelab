@@ -34,7 +34,7 @@ K3s cluster running self-hosted services.
 (preferably via Ansible Vault secret as currently implemented)
 3. **Terraform Variables**: 
     - Provide/create **terraform.tfvars** in   
-**provisioning/terraform/prod** AND **provisioning/terraform/staging**:
+**provisioning/terraform/production** AND **provisioning/terraform/staging**:
 
 ```sh
 # Secrets
@@ -57,10 +57,10 @@ host_ip       = "192.168.X.XXX"  # Host IP; 192.168.0.111 / 192.168.0.109
 cd scripts/
 source ./setup_env.sh  # Sets up your shell environment
 
-# Add ENV=prod or leave blank for prod
+# Add ENV=production or leave blank for production
 # Add ENV=staging for staging
 
-# make provision-host           = prod
+# make provision-host           = production
 # make provision-host ENV=stage = staging
 
 make provision-host    # Configures KVM/libvirt & Tailscale
@@ -103,7 +103,7 @@ make provision         # Bootstraps K3s & FluxCD
 ├── provisioning/            # IaC and Configuration
 │   ├── terraform/  
 │      ├── modules/
-│      ├── prod/
+│      ├── production/
 │      └── staging/        
 │   └── ansible/    
 │      ├── inventory/
@@ -165,7 +165,6 @@ make provision         # Bootstraps K3s & FluxCD
 - More networking tuning
 - Refine Kyverno policies
 - Setup truenas-exporter
-- Rename all 'prod' instances to 'production'
 - Extract FluxCD bootstrap env to variable
 - Move Makefile to root... maybe
 

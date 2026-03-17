@@ -3,13 +3,12 @@
 *.tfstate
 *.tfstate.backup
 terraform.tfvars
-prod.tfvars
+production.tfvars
 staging.tfvars
 
 
 # Others
 .vault_pass
-prod_kubeconfig.yaml
+production_kubeconfig.yaml
 staging_kubeconfig.yaml
-k3s-homelab.yaml
 test

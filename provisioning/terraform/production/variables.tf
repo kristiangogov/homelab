@@ -40,6 +40,6 @@ variable "host_ip" {
 }
 
 variable "env" {
-  description = "Environment name (prod, staging)"
+  description = "Environment name (production, staging)"
   type        = string
 }

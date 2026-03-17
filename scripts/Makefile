@@ -1,4 +1,4 @@
-ENV ?= prod
+ENV ?= production
 
 ifeq ($(ENV), staging)
   HOST_IP  := 192.168.0.109
@@ -23,8 +23,8 @@ help:
 	@echo "  rebuild    - Rebuild the VM fleet and ping"
 	@echo "  provision  - Run the Ansible playbooks"
 	@echo ""
-	@echo "  Usage: make <target> [ENV=staging|prod]"
-	@echo "  ENV defaults to prod ($(HOST_IP))"
+	@echo "  Usage: make <target> [ENV=staging|production]"
+	@echo "  ENV defaults to production ($(HOST_IP))"
 
 ping:
 	cd $(ANSIBLE_DIR) && ansible everything $(ANSIBLE_OPTS) -m ping

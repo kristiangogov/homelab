@@ -6,7 +6,7 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     exit 1
 fi
 
-ENV="${ENV:-prod}"
+ENV="${ENV:-production}"
 
 if [[ "$ENV" == "staging" ]]; then
     HOST_IP="192.168.0.109"
