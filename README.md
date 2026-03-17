@@ -48,7 +48,7 @@ vm_memory     = "4096"           # VM RAM
 vm_vcpu       = 2                # VM CPU
 user_name     = "server"         # VM User (don't change)
 hostname_base = "k3s-node"       # VM base hostname
-env           = "prod"           # or "staging" respectively
+env           = "production"     # or "staging" respectively
 host_ip       = "192.168.X.XXX"  # Host IP; 192.168.0.111 / 192.168.0.109
 ```
 

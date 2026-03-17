@@ -6,8 +6,8 @@ else
   HOST_IP  := 192.168.0.111
 endif
 
-ANSIBLE_DIR   := $(abspath $(CURDIR)/../provisioning/ansible)
-TERRAFORM_DIR := $(abspath $(CURDIR)/../provisioning/terraform/$(ENV))
+ANSIBLE_DIR   := $(abspath $(CURDIR)/provisioning/ansible)
+TERRAFORM_DIR := $(abspath $(CURDIR)/provisioning/terraform/$(ENV))
 INVENTORY     := inventory/inventory.$(ENV).ini
 ANSIBLE_OPTS  := -i $(INVENTORY)
 
