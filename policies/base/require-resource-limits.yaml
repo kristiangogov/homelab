@@ -15,10 +15,6 @@ spec:
         apiVersions: [v1]
         operations: [CREATE, UPDATE]
         resources: [pods]
-  matchConditions:
-    - name: exclude-system-namespaces
-      expression: >-
-        !(object.metadata.namespace in ['kube-system', 'kyverno'])
   validations:
     - expression: >-
         object.spec.containers.all(c,
