@@ -1,4 +1,4 @@
-apiVersion: policies.kyverno.io/v1alpha1
+apiVersion: policies.kyverno.io/v1
 kind: ValidatingPolicy
 metadata:
   name: require-resource-limits
@@ -12,12 +12,9 @@ spec:
   matchConstraints:
     resourceRules:
       - apiGroups: [""]
-        apiVersions: ["v1"]
-        operations: ["CREATE", "UPDATE"]
-        resources: ["pods"]
-  matchConditions:
-    - name: exclude-system-namespaces
-      expression: "!(object.metadata.namespace in ['kube-system', 'kyverno'])"
+        apiVersions: [v1]
+        operations: [CREATE, UPDATE]
+        resources: [pods]
   validations:
     - expression: >-
         object.spec.containers.all(c,
@@ -26,4 +23,5 @@ spec:
           has(c.resources.limits.memory)
         )
       messageExpression: >-
-        "Pod " + object.metadata.name + " has containers missing memory limits"
+        "Pod " + object.metadata.name + " has containers missing CPU or memory limits"
+      message: All containers must have CPU and memory limits set.
