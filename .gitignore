@@ -12,3 +12,7 @@ staging.tfvars
 production_kubeconfig.yaml
 staging_kubeconfig.yaml
 test
+
+# Ansible Inventory
+inventory.production.ini
+inventory.staging.ini
