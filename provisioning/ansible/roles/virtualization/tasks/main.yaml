@@ -45,3 +45,23 @@
     autostart: yes
     command: create
   become: true
+
+- name: Enable libvirtd on boot
+  ansible.builtin.systemd:
+    name: libvirtd
+    enabled: true
+    state: started
+  become: true
+
+- name: Get list of defined VMs
+  community.libvirt.virt:
+    command: list_vms
+  register: all_vms
+  become: true
+
+- name: Set VMs to autostart
+  community.libvirt.virt:
+    name: "{{ item }}"
+    autostart: true
+  loop: "{{ all_vms.list_vms }}"
+  become: true
