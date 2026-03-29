@@ -24,7 +24,6 @@ spec:
               cpu: 10m
               memory: 1Gi
             limits:
-              cpu: 2000m
               memory: 2Gi
           ports:
             - containerPort: 8096
@@ -32,7 +31,7 @@ spec:
             httpGet:
               path: /health
               port: 8096
-            initialDelaySeconds: 30
+            initialDelaySeconds: 90
             periodSeconds: 30  
           env:
             - name: PUID
