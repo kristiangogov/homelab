@@ -154,6 +154,7 @@ make provision         # Bootstraps K3s & FluxCD
 | ![kube-state-metrics](https://cdn.simpleicons.org/cncf/5EC5EB?size=32) | kube-state-metrics | Exposes Kubernetes cluster-level metrics for Prometheus |
 | ![node-exporter](https://cdn.simpleicons.org/prometheus?size=32) | node-exporter | Collects host-level metrics for Prometheus |
 | ![K9s](https://cdn.simpleicons.org/kubernetes?size=32) | k9s | CLI tool to interactively view Kubernetes resources |
+| ![K9s](https://cdn.simpleicons.org/uptimekuma?size=32) | Uptime Kuma | Alternative monitoring running as TrueNAS App |
 
 ### Services
 | Logo | Name | Description |
