@@ -67,6 +67,19 @@ make apply             # Provisions VMs via Terraform
 make provision         # Bootstraps K3s & FluxCD
 ```
 
+5. **Host network stability note (optional, bridged setup)**
+
+    On Fedora hosts running a libvirt bridge (`br0`), relying on DHCP for the host interface can lead to intermittent connectivity issues during network reconfiguration or interface resets.
+    To make the setup resilient, the host bridge interface is recommended to be configured with a static IP:
+
+```bash
+sudo nmcli connection modify br0 \
+  ipv4.method manual \
+  ipv4.addresses 192.168.0.111/24 \
+  ipv4.gateway 192.168.0.1 \
+  ipv4.dns "192.168.0.1 1.1.1.1 8.8.8.8"
+```
+
 ## Architecture
 
 >[!NOTE]
