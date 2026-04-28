@@ -13,6 +13,7 @@ K3s cluster running self-hosted services.
 > [Implementing SOPS - GitOps secrets management](https://gogov.dev/blog/sops-secret-management)  
 > [Networking Overhaul & Production Migration](https://gogov.dev/blog/homelab-networking-overhaul)  
 > [NAS Introduction and more networking issues](https://gogov.dev/blog/homelab-nas-introduction)  
+> [Networking: A Retrospective in Pain](https://gogov.dev/blog/homelab-networking-overview)  
 > (WIP) [Kyverno implementation and policies]()  
 
 ## Quick Start 🚀
