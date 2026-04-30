@@ -2,7 +2,7 @@
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     echo "Error: This script must be sourced."
-    echo "Usage: source ./setup_env.sh"
+    echo "Usage: source scripts/env.sh"
     exit 1
 fi
 
