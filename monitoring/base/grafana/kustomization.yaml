@@ -5,3 +5,4 @@ resources:
   - service.yaml
   - pvc.yaml
   - secret.sops.yaml
+  - ingress.yaml
