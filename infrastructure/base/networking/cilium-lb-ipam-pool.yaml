@@ -4,4 +4,4 @@ metadata:
   name: homelab-pool
 spec:
   blocks:
-  - cidr: "192.168.122.200/29"  # 192.168.122.200-207 (8 IPs)
+  - cidr: "192.168.0.200/29"  # 192.168.0.200-207 (8 IPs)
