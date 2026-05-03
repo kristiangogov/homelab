@@ -17,4 +17,4 @@ spec:
               service:
                 name: jellyfin
                 port:
-                  number: 3096
+                  number: 8096
