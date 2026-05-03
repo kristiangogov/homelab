@@ -8,9 +8,10 @@ metadata:
 spec:
   ingressClassName: cilium
   rules:
-    - http:
+    - host: grafana.gogov.dev
+      http:
         paths:
-          - path: /grafana
+          - path: /
             pathType: Prefix
             backend:
               service:
