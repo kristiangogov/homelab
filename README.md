@@ -155,7 +155,8 @@ sudo nmcli connection modify br0 \
 ├── services/
 │   ├── base/
 │       ├── homepage/
-│       └── jellyfin/
+│       ├── jellyfin/
+│       └── silverbullet/
 │   ├── production/
 │   └── staging/
 ├── Makefile                 # Main orchestrator
@@ -204,9 +205,11 @@ sudo nmcli connection modify br0 \
 |:-:|-----|-------------|
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
+| <img src="https://repository-images.githubusercontent.com/459944886/a6e61d23-9090-4cc4-946d-c5d9c189240f" width="32" height="32" /> | SilverBullet.md | Programmable browser-based Markdown editor |
+
 
 ## Up next / To do list
-- Introduce SSO (Authentik)
+- Replace Cloudflare Access with self-hosted Authentik
 - Migrate rest of the services to Ingress
 - Deprecate NGINX if no longer needed
 - Refine Kyverno policies
