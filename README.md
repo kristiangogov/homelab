@@ -16,17 +16,22 @@ K3s cluster running self-hosted services.
 > [Networking: A Retrospective in Pain](https://gogov.dev/blog/homelab-networking-overview)  
 > (WIP) [Kyverno implementation and policies]()  
 
-## Quick Start 🚀
+## Setup
+
+> [!WARNING]
+> This setup is no longer easily reproducible as it requires external dependencies. Although still
+> very much doable, it requires significant effort and multiple services outside the cluster itself - **NAS Storage**, **Cloudflare Account**, and a **Personal Domain with DNS managed by Cloudflare**.
 
 ### Prerequisites:
+
 > [!IMPORTANT]
 > The following is expected:  
 > **Production** host permanent IP: **192.168.0.111**  
 > **Staging** host permanent IP: **192.168.0.109** (optional, if setting up dual environments)  
 > **NAS** permanent IP: **192.168.0.104** (can be replicated without external provisioner, but requires tweaking)  
-> If your setup differs in any way, you should adjust those values in all relevant places - deployments, persistent volume claims, setup_env script etc.
-1. **Prepare Fedora 43 Host:** 
-    - Install a fresh Fedora 43 (KDE tested)
+> If your setup differs in any way, you should adjust those values in all relevant places - deployments, persistent volume claims, env script etc.
+1. **Prepare Fedora Host:** 
+    - Install a fresh Fedora (KDE and Server tested)
     - Connected via Ethernet (required for bridge)
     - Ensure SSH is active and your key is added
     - Ensure virtualization is enabled at BIOS level
@@ -80,6 +85,29 @@ sudo nmcli connection modify br0 \
   ipv4.gateway 192.168.0.1 \
   ipv4.dns "192.168.0.1 1.1.1.1 8.8.8.8"
 ```
+
+6. **External Access (Cloudflare Tunnel)**
+
+    After provisioning, services are exposed via Cloudflare Tunnel - no port forwarding required.
+
+    **Prerequisites:**
+    - Cloudflare Account
+    - Domain DNS managed by Cloudflare
+    - Age key available (stored in Ansible Vault)
+
+    **Setup:**
+    1. Create a tunnel in Cloudflare Zero Trust → Networks → Tunnels
+    2. Copy the tunnel token
+    3. Add token to `infrastructure/base/networking/secret.sops.yaml` (encrypted via SOPS)
+    4. Add public hostnames in Cloudflare dashboard per service
+    5. Add corresponding CNAME records in Cloudflare DNS per service
+
+    **DNS records:**
+    | Type | Name | Value |
+    |------|------|-------|
+    | CNAME | grafana | `<tunnel-id>.cfargotunnel.com` |
+    | CNAME | jellyfin | `<tunnel-id>.cfargotunnel.com` |
+    | CNAME | etc. | `<tunnel-id>.cfargotunnel.com` |
 
 ## Architecture
 
@@ -147,7 +175,7 @@ sudo nmcli connection modify br0 \
 ### Infrastructure
 | Logo | Name | Description |
 |:-:|-----|-------------|
-| ![Fedora](https://cdn.simpleicons.org/fedora?size=32) | Fedora 43 | Linux Distribution used on Host, VMs and Workstation |
+| ![Fedora](https://cdn.simpleicons.org/fedora?size=32) | Fedora | Linux Distribution used on Host, VMs and Workstation |
 | ![TrueNAS](https://cdn.simpleicons.org/truenas?size=32) | TrueNAS | Open-source unified storage operating system based on OpenZFS |
 | ![QEMU](https://cdn.simpleicons.org/qemu?size=32) | QEMU/KVM | Hypervisor for running virtual machines |
 | ![K3s](https://cdn.simpleicons.org/k3s?size=32) | K3s | Lightweight Kubernetes engine |
@@ -156,8 +184,9 @@ sudo nmcli connection modify br0 \
 | ![Ansible](https://cdn.simpleicons.org/ansible/f00?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
 | ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
 | ![Cilium](https://cdn.simpleicons.org/cilium/size=32) | Cilium | Solution for providing, securing, and observing network connectivity |
-| ![NGINX](https://cdn.simpleicons.org/nginx/size=32) | NGINX | Reverse proxy for external traffic |
+| ![NGINX](https://cdn.simpleicons.org/nginx/size=32) | NGINX | Reverse proxy for external traffic (To be deprecated) |
 | <img src="https://raw.githubusercontent.com/kyverno/artwork/5be18d691ae2b42beb898ffc1312024975749bd8/Kyverno.svg" width="32" height="32" /> | Kyverno | Unified Policy as Code solution |
+| ![Cloudflare](https://cdn.simpleicons.org/cloudflare?size=32) | Cloudflare | Zero-Trust Tunnel for serving services securely on a domain |
 
 ### Monitoring
 | Logo | Name | Description |
@@ -177,7 +206,9 @@ sudo nmcli connection modify br0 \
 | ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 
 ## Up next / To do list
-- More networking tuning
+- Introduce SSO (Authentik)
+- Migrate rest of the services to Ingress
+- Deprecate NGINX if no longer needed
 - Refine Kyverno policies
 - Setup truenas-exporter
 - Extract FluxCD bootstrap env to variable
