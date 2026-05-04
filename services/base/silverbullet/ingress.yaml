@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: silverbullet
+  namespace: silverbullet
+  annotations:
+    ingress.cilium.io/loadbalancer-mode: shared
+spec:
+  ingressClassName: cilium
+  rules:
+    - host: notes.gogov.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: silverbullet
+                port:
+                  number: 3000

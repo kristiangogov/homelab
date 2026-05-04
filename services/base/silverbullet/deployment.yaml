@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: silverbullet
+  namespace: silverbullet
+spec:
+  # must be 1! there shouldn't be concurrent access to space
+  replicas: 1  
+  selector:
+    matchLabels:
+      app: silverbullet
+  template:
+    metadata:
+      labels:
+        app: silverbullet
+    spec:
+      containers:
+        - name: silverbullet
+          # Keeping latest as project is in very active dev
+          image: ghcr.io/silverbulletmd/silverbullet:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: SB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: silverbullet-auth
+                  key: SB_USER
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+          volumeMounts:
+            - name: space
+              mountPath: /space
+      volumes:
+        - name: space
+          persistentVolumeClaim:
+            claimName: silverbullet-space
