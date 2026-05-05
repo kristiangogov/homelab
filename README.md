@@ -184,7 +184,6 @@ sudo nmcli connection modify br0 \
 | ![Ansible](https://cdn.simpleicons.org/ansible/f00?size=32) | Ansible | Automation tool for post-provisioning configuration and orchestration |
 | ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
 | ![Cilium](https://cdn.simpleicons.org/cilium/size=32) | Cilium | Solution for providing, securing, and observing network connectivity |
-| ![NGINX](https://cdn.simpleicons.org/nginx/size=32) | NGINX | Reverse proxy for external traffic (To be deprecated) |
 | <img src="https://raw.githubusercontent.com/kyverno/artwork/5be18d691ae2b42beb898ffc1312024975749bd8/Kyverno.svg" width="32" height="32" /> | Kyverno | Unified Policy as Code solution |
 | ![Cloudflare](https://cdn.simpleicons.org/cloudflare?size=32) | Cloudflare | Zero-Trust Tunnel for serving services securely on a domain |
 
@@ -208,8 +207,6 @@ sudo nmcli connection modify br0 \
 
 ## Up next / To do list
 - Replace Cloudflare Access with self-hosted Authentik
-- Migrate rest of the services to Ingress
-- Deprecate NGINX if no longer needed
 - Refine Kyverno policies
 - Setup truenas-exporter
 - Extract FluxCD bootstrap env to variable

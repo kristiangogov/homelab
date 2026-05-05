@@ -22,9 +22,3 @@
   become: true
   roles:
     - flux
-
-- name: Setup Host Nginx
-  hosts: target_env
-  become: true
-  roles:
-    - configure-nginx-ips
