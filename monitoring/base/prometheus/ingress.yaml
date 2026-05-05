@@ -8,9 +8,10 @@ metadata:
 spec:
   ingressClassName: cilium
   rules:
-    - http:
+    - host: prometheus.gogov.dev
+      http:
         paths:
-          - path: /prometheus
+          - path: /
             pathType: Prefix
             backend:
               service:
