@@ -154,7 +154,6 @@ sudo nmcli connection modify br0 \
 ├── scripts/
 ├── services/
 │   ├── base/
-│       ├── homepage/
 │       ├── jellyfin/
 │       └── silverbullet/
 │   ├── production/
@@ -204,7 +203,6 @@ sudo nmcli connection modify br0 \
 | Logo | Name | Description |
 |:-:|-----|-------------|
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
-| ![Homepage](https://cdn.simpleicons.org/homepage?size=32) | Homepage | Highly customizable dashboard |
 | <img src="https://repository-images.githubusercontent.com/459944886/a6e61d23-9090-4cc4-946d-c5d9c189240f" width="32" height="32" /> | SilverBullet.md | Programmable browser-based Markdown editor |
 
 
