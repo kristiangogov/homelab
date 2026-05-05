@@ -19,7 +19,7 @@ spec:
         fsGroup: 65534
       containers:
         - name: alertmanager
-          image: prom/alertmanager:v0.32
+          image: prom/alertmanager:v0.32.1
           resources:
             requests:
               cpu: 10m
