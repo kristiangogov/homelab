@@ -13,19 +13,13 @@ spec:
       labels:
         app: alertmanager
     spec:
-      # Init container to fix permissions
-      initContainers:
-        - name: fix-permissions
-          image: busybox
-          command: ["sh", "-c", "chown -R 65534:65534 /alertmanager"]
-          securityContext:
-            runAsUser: 0 
-          volumeMounts:
-            - name: data-volume
-              mountPath: /alertmanager
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
       containers:
         - name: alertmanager
-          image: prom/alertmanager:v0.30.1
+          image: prom/alertmanager:v0.32
           resources:
             requests:
               cpu: 10m
@@ -48,6 +42,5 @@ spec:
           configMap:
             name: alertmanager-config
         - name: data-volume
-          hostPath:
-            path: /opt/k8s-data/alertmanager
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: alertmanager-data

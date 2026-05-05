@@ -4,10 +4,9 @@ metadata:
   name: alertmanager
   namespace: monitoring
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 9093
       targetPort: 9093
-      nodePort: 30093
   selector:
     app: alertmanager
