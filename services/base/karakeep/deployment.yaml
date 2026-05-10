@@ -23,7 +23,7 @@ spec:
               cpu: 100m
               memory: 256Mi
             limits:
-              memory: 1Gi
+              memory: 512Mi
           volumeMounts:
             - mountPath: /data
               name: data
@@ -62,7 +62,7 @@ spec:
               cpu: 100m
               memory: 256Mi
             limits:
-              memory: 1Gi
+              memory: 512Mi
           env:
             - name: MEILI_NO_ANALYTICS
               value: "true"
@@ -102,7 +102,7 @@ spec:
               cpu: 100m
               memory: 256Mi
             limits:
-              memory: 1Gi
+              memory: 512Mi
           command:
             - chromium-browser
             - --headless
