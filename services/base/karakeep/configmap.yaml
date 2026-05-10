@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: karakeep-config
+  namespace: karakeep
+data:
+  NEXTAUTH_URL: "https://karakeep.gogov.dev"
+  MEILI_ADDR: "http://meilisearch:7700"
+  BROWSER_WEB_URL: "http://chrome:9222"
+  DATA_DIR: "/data"
+  KARAKEEP_VERSION: "release"
+  MEILI_NO_ANALYTICS: "true"

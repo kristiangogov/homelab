@@ -45,4 +45,11 @@ kind: Namespace
 metadata:
   name: silverbullet
 
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: karakeep
+
 
