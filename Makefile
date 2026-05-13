@@ -11,7 +11,7 @@ TERRAFORM_DIR := $(abspath $(CURDIR)/provisioning/terraform/$(ENV))
 INVENTORY     := inventory/inventory.$(ENV).ini
 ANSIBLE_OPTS  := -i $(INVENTORY)
 
-.PHONY: help ping init plan apply destroy get-ips rebuild auto-rebuild provision provision-host
+.PHONY: help ping init plan apply destroy get-ips rebuild auto-rebuild provision provision-host edit-vault
 
 help:
 	@echo "Available commands:"
@@ -22,6 +22,7 @@ help:
 	@echo "  destroy    - Run terraform destroy"
 	@echo "  rebuild    - Rebuild the VM fleet and ping"
 	@echo "  provision  - Run the Ansible playbooks"
+	@echo "  edit-vault - Open the Ansible Vault using a password file"
 	@echo ""
 	@echo "  Usage: make <target> [ENV=staging|production]"
 	@echo "  ENV defaults to production ($(HOST_IP))"
@@ -63,3 +64,6 @@ provision:
 
 provision-host:
 	cd $(ANSIBLE_DIR) && ansible-playbook $(ANSIBLE_OPTS) playbooks/host.yaml --ask-become-pass
+
+edit-vault:
+	ansible-vault edit $(ANSIBLE_DIR)/inventory/group_vars/all/secrets.yml --vault-password-file $(ANSIBLE_DIR)/.vault_pass
