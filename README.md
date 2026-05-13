@@ -155,6 +155,7 @@ sudo nmcli connection modify br0 \
 ├── services/
 │   ├── base/
 │       ├── jellyfin/
+│       ├── karakeep/
 │       └── silverbullet/
 │   ├── production/
 │   └── staging/
@@ -203,6 +204,8 @@ sudo nmcli connection modify br0 \
 |:-:|-----|-------------|
 | ![Jellyfin](https://cdn.simpleicons.org/jellyfin?size=32) | Jellyfin | Media streaming service | 
 | <img src="https://repository-images.githubusercontent.com/459944886/a6e61d23-9090-4cc4-946d-c5d9c189240f" width="32" height="32" /> | SilverBullet.md | Programmable browser-based Markdown editor |
+| ![Karakeep](https://cdn.simpleicons.org/karakeep?size=32) | Karakeep | Bookmark manager | 
+
 
 
 ## Up next / To do list
