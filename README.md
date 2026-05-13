@@ -14,6 +14,7 @@ K3s cluster running self-hosted services.
 > [Networking Overhaul & Production Migration](https://gogov.dev/blog/homelab-networking-overhaul)  
 > [NAS Introduction and more networking issues](https://gogov.dev/blog/homelab-nas-introduction)  
 > [Networking: A Retrospective in Pain](https://gogov.dev/blog/homelab-networking-overview)  
+> [Diagnosing an Intel i219-V Hardware Hang](https://gogov.dev/blog/diagnosing-hardware-hang)  
 > (WIP) [Kyverno implementation and policies]()  
 
 ## Setup
