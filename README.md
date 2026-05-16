@@ -187,7 +187,9 @@ sudo nmcli connection modify br0 \
 | ![SOPS](https://cdn.simpleicons.org/privateinternetaccess/000?size=32) | SOPS | Secret OPerationS - tool for managing secrets |
 | ![Cilium](https://cdn.simpleicons.org/cilium/size=32) | Cilium | Solution for providing, securing, and observing network connectivity |
 | <img src="https://raw.githubusercontent.com/kyverno/artwork/5be18d691ae2b42beb898ffc1312024975749bd8/Kyverno.svg" width="32" height="32" /> | Kyverno | Unified Policy as Code solution |
-| ![Cloudflare](https://cdn.simpleicons.org/cloudflare?size=32) | Cloudflare | Zero-Trust Tunnel for serving services securely on a domain |
+| <img src="https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/cloudflare-zero-trust.png" width="32" height="32" />  | Cloudflare | Zero-Trust Tunnel for exposing services securely on a the internet |
+
+
 
 ### Monitoring
 | Logo | Name | Description |
@@ -208,12 +210,24 @@ sudo nmcli connection modify br0 \
 | ![Karakeep](https://cdn.simpleicons.org/karakeep?size=32) | Karakeep | Bookmark manager | 
 
 
+### Backup Strategy
+
+The homelab follows a **3-2-1 backup strategy**:
+
+| Logo | Name | Description |
+|:-:|-----|-------------|
+| ![TrueNAS](https://cdn.simpleicons.org/truenas?size=32) | TrueNAS | Primary local storage - 2x 1TB WD Red ZFS mirror |
+| <img src="https://images.icon-icons.com/61/PNG/128/lightbrown_external_drive_usb_folder_12286.png" width="32" height="32" /> | External SSD | Secondary local copy for critical data |
+| ![Backblaze](https://cdn.simpleicons.org/backblaze?size=32) | Backblaze B2 | Offsite cloud storage via TrueNAS Cloud Sync |
+
+>[!TIP]
+> Infrastructure configs and other version-controlled assets also live on GitHub, adding a fourth copy for the most critical data.
+
 
 ## Up next / To do list
-- Replace Cloudflare Access with self-hosted Authentik
-- Refine Kyverno policies
-- Setup truenas-exporter
-- Extract FluxCD bootstrap env to variable
+
+- Current focus is stability and reliabilty, no new features planned
+- Focus observability and alerting
 
 ## Goal
 Learn **Kubernetes** and its ecosystem by breaking things in a controlled environment.
